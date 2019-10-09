@@ -19,7 +19,7 @@
 #include <linux/uaccess.h>
 #include <linux/jiffies.h>
 #include <asm/param.h>
-#define BUFFER_SIZE 128
+#define BUFFER_SIZE 256
 
 #define PROC_NAME "seconds"
 #define MESSAGE "Hello World\n"
@@ -87,8 +87,7 @@ ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t 
 	
         completed = 1;
 
-        rv = sprintf(buffer, "seconds elapsed %f \n",(jiffies-init_jiffies)/HZ);
-
+        rv = sprintf(buffer, "jiffies elapsed %lu \t seconds elapsed %lu \n",(jiffies-init_jiffies),(jiffies-init_jiffies)/HZ);
         // copies the contents of buffer to userspace usr_buf
         copy_to_user(usr_buf, buffer, rv);
 
