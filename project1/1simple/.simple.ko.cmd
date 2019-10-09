@@ -1,0 +1,1 @@
+cmd_/root/EI338/Unknown-Pleasures/project1/1simple/simple.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /root/EI338/Unknown-Pleasures/project1/1simple/simple.ko /root/EI338/Unknown-Pleasures/project1/1simple/simple.o /root/EI338/Unknown-Pleasures/project1/1simple/simple.mod.o
