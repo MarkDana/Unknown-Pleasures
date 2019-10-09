@@ -28,7 +28,7 @@
  * Function prototypes
  */
 unsigned long init_jiffies; //Declaration ahead, outside the function
-static ssize_t proc_read(struct file *file, char *buf, size_t count, loff_t *pos);
+ssize_t proc_read(struct file *file, char *buf, size_t count, loff_t *pos);
 
 static struct file_operations proc_ops = {
         .owner = THIS_MODULE,
@@ -37,7 +37,7 @@ static struct file_operations proc_ops = {
 
 
 /* This function is called when the module is loaded. */
-static int proc_init(void)
+int proc_init(void)
 {
 
         // creates the /proc/hello entry
@@ -51,7 +51,7 @@ static int proc_init(void)
 }
 
 /* This function is called when the module is removed. */
-static void proc_exit(void) {
+void proc_exit(void) {
 
         // removes the /proc/hello entry
         remove_proc_entry(PROC_NAME, NULL);
@@ -74,7 +74,7 @@ static void proc_exit(void) {
  * count:
  * pos:
  */
-static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos)
+ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos)
 {
         int rv = 0;
         char buffer[BUFFER_SIZE];
@@ -87,7 +87,7 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
 	
         completed = 1;
 
-        rv = sprintf(buffer, "seconds elapsed %lu \n",(jiffies-init_jiffies)/HZ);
+        rv = sprintf(buffer, "seconds elapsed %f \n",(jiffies-init_jiffies)/HZ);
 
         // copies the contents of buffer to userspace usr_buf
         copy_to_user(usr_buf, buffer, rv);
