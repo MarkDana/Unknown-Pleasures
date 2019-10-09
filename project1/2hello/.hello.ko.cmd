@@ -1,0 +1,1 @@
+cmd_/root/EI338/Unknown-Pleasures/project1/2hello/hello.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /root/EI338/Unknown-Pleasures/project1/2hello/hello.ko /root/EI338/Unknown-Pleasures/project1/2hello/hello.o /root/EI338/Unknown-Pleasures/project1/2hello/hello.mod.o
