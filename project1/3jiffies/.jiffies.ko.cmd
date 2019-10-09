@@ -1,0 +1,1 @@
+cmd_/root/EI338/Unknown-Pleasures/project1/3jiffies/jiffies.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /root/EI338/Unknown-Pleasures/project1/3jiffies/jiffies.ko /root/EI338/Unknown-Pleasures/project1/3jiffies/jiffies.o /root/EI338/Unknown-Pleasures/project1/3jiffies/jiffies.mod.o
