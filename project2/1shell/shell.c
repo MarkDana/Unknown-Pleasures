@@ -60,15 +60,7 @@ int main(void){
             concurrent = 1;
         }
         else concurrent= 0;
-        
-                for (int t=0;t<=arg_length;++t){
-                    printf("%s ",args[t]);
-                }
-                printf("\n");
-                printf("type=%d id=%d\n",cmd_type,cmd_index);
-        
-        
-        
+         
         pid_t pid=fork();
         
         if (pid < 0) {
