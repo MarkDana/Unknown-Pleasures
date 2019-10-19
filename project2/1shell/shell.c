@@ -24,7 +24,8 @@ void execute(char **args);
 int main(void){
     while (should_run){
         memset(command, 0, sizeof(command));//clear last command
-        cmd_type=simple_cmd;cmd_index=-1;
+        cmd_type=simple_cmd;
+        arg_length=0;
         printf("osh>");
         fflush(stdout);
         int i=0;
@@ -39,7 +40,7 @@ int main(void){
         
         if(!strcmp(command, "")){continue;}
         if(!strcmp(command, "exit")){should_run=0;continue;}
-        if (arg_length==1&&!strcmp(command, "!!")){
+        if (!strcmp(command, "!!")){
             if (strcmp(last_command,"")){//not empty
                 strcpy(command, last_command);
                 printf("Last command: %s\n", command);
@@ -48,19 +49,24 @@ int main(void){
                 continue;
             }
         }
+        
         strcpy(last_command, command);
         
         strcpy(tmp,command);//since strtok will change input
         parse(tmp,args);
-        
-
         
         if (!strcmp(args[arg_length-1],"&")){
             args[--arg_length] = NULL;
             concurrent = 1;
         }
         else concurrent= 0;
-         
+        
+                for (int t=0;t<=arg_length;++t){
+                    printf("%s ",args[t]);
+                }
+                printf("\n");
+                printf("type=%d id=%d\n",cmd_type,cmd_index);
+ 
         pid_t pid=fork();
         
         if (pid < 0) {
@@ -148,9 +154,3 @@ void execute(char **args){
     //execvp will terminate the current process and exit, if successful
     fprintf(stderr,"Failed: invalid command %s.\n",command);
 }
-
-
-
-    
-
-
