@@ -104,7 +104,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
             return -1;
         }
         
-        printk(KERN_INFO "k_mem: %s∖n", k_mem);
+        printk(KERN_INFO "k_mem: %s", k_mem);
 
 	/**
  	 * kstrol() will not work because the strings are not guaranteed
@@ -113,7 +113,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
 	 * sscanf() must be used instead.
 	 */
 
-        sscanf(k_mem, "%s", buffer);
+        sscanf(k_mem, "%ld%s", &l_pid, buffer);
 
         kfree(k_mem);
 
