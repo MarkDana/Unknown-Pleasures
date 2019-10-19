@@ -74,7 +74,7 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
         tsk = pid_task(find_vpid(l_pid), PIDTYPE_PID);
         
         if(tsk==NULL) {
-        	rv=sprintf(buffer, "pid %ld not found\n", l_pid);
+        	rv = sprintf(buffer, "pid %ld not found\n", l_pid);
         }else{
         	rv = sprintf(buffer, "command = [%s] pid = [%ld] state = [%ld]\n", tsk->comm, l_pid, tsk->state);
 		}
@@ -97,6 +97,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
         // allocate kernel memory
         char buffer[BUFFER_SIZE];
         k_mem = kmalloc(count, GFP_KERNEL);
+        printk(KERN_INFO "count: %ld", count);
 
         /* copies user space usr_buf to kernel buffer */
         if (copy_from_user(k_mem, usr_buf, count)) {
@@ -104,7 +105,9 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
             return -1;
         }
         
-        printk(KERN_INFO "k_mem: %s", k_mem);
+        sscanf(k_mem, "%ld%s", &l_pid, buffer);
+        
+        printk(KERN_INFO "k_mem: %ld", l_pid);
 
 	/**
  	 * kstrol() will not work because the strings are not guaranteed
@@ -112,8 +115,6 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
 	 * 
 	 * sscanf() must be used instead.
 	 */
-
-        sscanf(k_mem, "%ld%s", &l_pid, buffer);
 
         kfree(k_mem);
 
