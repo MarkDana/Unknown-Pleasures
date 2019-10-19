@@ -11,13 +11,15 @@
 #include <linux/kernel.h>
 #include <linux/proc_fs.h>
 #include <linux/vmalloc.h>
-#include <asm/uaccess.h>
+#include <linux/uaccess.h>
 
 #define BUFFER_SIZE 128
 #define PROC_NAME "pid"
 
 /* the current pid */
 static long l_pid;
+static long pid_state;
+static char command[BUFFER_SIZE];
 
 /**
  * Function prototypes
@@ -34,21 +36,18 @@ static struct file_operations proc_ops = {
 /* This function is called when the module is loaded. */
 static int proc_init(void)
 {
-        // creates the /proc/procfs entry
-        proc_create(PROC_NAME, 0666, NULL, &proc_ops);
-
-        printk(KERN_INFO "/proc/%s created\n", PROC_NAME);
-
-	return 0;
+    // creates the /proc/procfs entry
+    proc_create(PROC_NAME, 0666, NULL, &proc_ops);
+    printk(KERN_INFO "/proc/%s created\n", PROC_NAME);
+    return 0;
 }
 
 /* This function is called when the module is removed. */
 static void proc_exit(void) 
 {
-        // removes the /proc/procfs entry
-        remove_proc_entry(PROC_NAME, NULL);
-
-        printk( KERN_INFO "/proc/%s removed\n", PROC_NAME);
+    // removes the /proc/procfs entry
+    remove_proc_entry(PROC_NAME, NULL);
+    printk( KERN_INFO "/proc/%s removed\n", PROC_NAME);
 }
 
 /**
@@ -61,78 +60,66 @@ static void proc_exit(void)
  */
 static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos)
 {
-        int rv = 0;
-        char buffer[BUFFER_SIZE];
-        static int completed = 0;
-        struct task_struct *tsk = NULL;
+    int rv = 0;
+    char buffer[BUFFER_SIZE];
+    static int completed = 0;
+    struct task_struct *tsk = NULL;
 
-        if (completed) {
-                completed = 0;
-                return 0;
-        }
-
-        /*
-        char comm[TASK_COMM_LEN]; /* executable name excluding path
-                                        - access with [gs]et_task_comm (which lock it with task_lock())
-                                        - initialized normally by setup_new_exec 
-        pid_t pid;
-        volatile long state;	/* -1 unrunnable, 0 runnable, >0 stopped 
-        */
-
-        tsk = pid_task(find_vpid(l_pid), PIDTYPE_PID);
-        if(tsk==NULL) return 0;
-
-        rv = sprintf(buffer, "command = [%s] pid = [%ld] state = [%ld]\n", tsk->comm, l_pid, (long) tsk->state);
-
-        completed = 1;
-
-        // copies the contents of kernel buffer to userspace usr_buf 
-        if (copy_to_user(usr_buf, buffer, rv)) {
-                rv = -1;
-        }
-
-        return rv;
+    if (completed) {
+            completed = 0;
+            return 0;
+    }
+    printk("ready to check");
+    printk("PID-> %ld\n", l_pid);
+    /*tsk = pid_task(find_vpid(l_pid), PIDTYPE_PID);
+    if (tsk){
+    	printk("null pid task found");
+    	return -1;
+    }*/
+    completed = 1;
+    printk("ready to transform\n");
+    printk("pid-> %ld\n", l_pid);
+    printk("%s", command);
+    printk("%ld", pid_state);
+    rv = sprintf(buffer, "command=[%s] pid=[%ld] state=[%ld]\n", command, l_pid, pid_state);
+    if (copy_to_user(usr_buf, buffer, rv)) {
+        printk( KERN_INFO "Error copying from user\n");
+        rv = -1;
+    }
+    return rv;
 }
 
-/**
- * This function is called each time we write to the /proc file system.
- */
+
 static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t count, loff_t *pos)
 {
-        char *k_mem;
-        char buffer[BUFFER_SIZE];
-        // allocate kernel memory
-        k_mem = kmalloc(count, GFP_KERNEL);
+    char *k_mem;
+    char mem[100];
+    k_mem = kmalloc(count, GFP_KERNEL);
+    if (copy_from_user(k_mem, usr_buf, count)) {
+        printk( KERN_INFO "Error copying from user\n");
+        return -1;
+    }
 
-        /* copies user space usr_buf to kernel buffer */
-        if (copy_from_user(k_mem, usr_buf, count)) {
-		printk( KERN_INFO "Error copying from user\n");
-                return -1;
-        }
+    printk(KERN_INFO "K_MEM-> %s\n", k_mem);
+    sscanf(k_mem,"%ld\n%s", &l_pid, mem);
 
-	/**
- 	 * kstrol() will not work because the strings are not guaranteed
-	 * to be null-terminated.
-	 * 
-	 * sscanf() must be used instead.
-	 */
+    struct task_struct *tsk = NULL;
+    if (pid_task(find_vpid(l_pid), PIDTYPE_PID)){
+    	tsk = pid_task(find_vpid(l_pid), PIDTYPE_PID);
+	strcpy(command, tsk->comm);
+	pid_state = tsk->state;
+    }else{
+    	printk("no correct pid found");
+    }
 
-        sscanf(k_mem, "%s", buffer); // 自动补上\0?
-        if (kstrtol(buffer, 10, &l_pid)){
-                printk(KERN_INFO "kstrtol goes wrong\n");
-                return -1;
-        }
-
-        kfree(k_mem);
-
-        return count;
+    kfree(k_mem);
+    return count;
 }
 
-/* Macros for registering module entry and exit points. */
+
 module_init( proc_init );
 module_exit( proc_exit );
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Module");
-MODULE_AUTHOR("SGG");
-
+MODULE_AUTHOR("CMQ");
