@@ -1,1 +1,0 @@
-cmd_/root/EI338/Unknown-Pleasures/project2/2pid/pid.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /root/EI338/Unknown-Pleasures/project2/2pid/pid.ko /root/EI338/Unknown-Pleasures/project2/2pid/pid.o /root/EI338/Unknown-Pleasures/project2/2pid/pid.mod.o

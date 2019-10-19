@@ -71,25 +71,18 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
                 return 0;
         }
 
-        /*
-        char comm[TASK_COMM_LEN]; /* executable name excluding path
-                                        - access with [gs]et_task_comm (which lock it with task_lock())
-                                        - initialized normally by setup_new_exec 
-        pid_t pid;
-        volatile long state;	/* -1 unrunnable, 0 runnable, >0 stopped 
-        */
-
         tsk = pid_task(find_vpid(l_pid), PIDTYPE_PID);
+        
         if(tsk==NULL) return 0;
 
-        rv = sprintf(buffer, "command = [%s] pid = [%ld] state = [%ld]\n", tsk->comm, l_pid, (long) tsk->state);
-
-        completed = 1;
+        rv = sprintf(buffer, "command = [%s] pid = [%ld] state = [%d]\n", tsk->comm, l_pid, tsk->state);
 
         // copies the contents of kernel buffer to userspace usr_buf 
         if (copy_to_user(usr_buf, buffer, rv)) {
                 rv = -1;
         }
+        
+        completed = 1;
 
         return rv;
 }
@@ -100,15 +93,17 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
 static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t count, loff_t *pos)
 {
         char *k_mem;
-        char buffer[BUFFER_SIZE];
         // allocate kernel memory
+        char buffer[BUFFER_SIZE];
         k_mem = kmalloc(count, GFP_KERNEL);
 
         /* copies user space usr_buf to kernel buffer */
         if (copy_from_user(k_mem, usr_buf, count)) {
-		printk( KERN_INFO "Error copying from user\n");
-                return -1;
+			printk( KERN_INFO "Error copying from user\n");
+            return -1;
         }
+        
+        printk(KERN_INFO "KERN_INFO: %s∖n", k_mem);
 
 	/**
  	 * kstrol() will not work because the strings are not guaranteed
@@ -117,11 +112,7 @@ static ssize_t proc_write(struct file *file, const char __user *usr_buf, size_t 
 	 * sscanf() must be used instead.
 	 */
 
-        sscanf(k_mem, "%s", buffer); // 自动补上\0?
-        if (kstrtol(buffer, 10, &l_pid)){
-                printk(KERN_INFO "kstrtol goes wrong\n");
-                return -1;
-        }
+        sscanf(k_mem, "%s", buffer);
 
         kfree(k_mem);
 
