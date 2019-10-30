@@ -49,16 +49,15 @@ void* sort_half(void *param){
     int *head=p->head;
     int left=p->left;
     int right=p->right;
-    printf("我是负责排序从第%d到第%d位的子进程.\n",left,right);
+    printf("thread sorting from index %d to %d.\n",left,right);
     quick_sort(head,left,right);
-    printf("第%d到第%d位排序完毕.\n",left,right);
     for (int puu=left;puu<=right;++puu)printf("%d ",head[puu]);
     printf("\n");
     pthread_exit(0);
 }
 
 void* merge(void *param){ // 进行归并
-    printf("我是负责归并的子进程.\n");
+    printf("thread merge two sorted arrays.\n");
     merge_data *p=param;
     int *array1=p->array1;
     int *array2=p->array2;
@@ -66,10 +65,6 @@ void* merge(void *param){ // 进行归并
     int num1=p->num1;
     int num2=p->num2;
     int i=0,j=0,k=0;
-    // for (int puu=0;puu<num1;++puu)printf("%d ",array1[puu]);
-    // printf("\n");
-    // for (int puu=0;puu<num2;++puu)printf("%d ",array2[puu]);
-    // printf("\n");
 
     while(i<num1&&j<num2){
         if(array1[i]<=array2[j]){
@@ -78,15 +73,11 @@ void* merge(void *param){ // 进行归并
     }
     while(i<num1) res[k++]=array1[i++];
     while(j<num2) res[k++]=array2[j++];
-    printf("归并完毕.\n");
+    printf("merged.\n");
     pthread_exit(0);
 }
 
-int main(int argc, char *argv[])
-{  
-    //要求把变量定义都写在前面 
-    // 传参数的时候，不能传数组名，要&取地址之后再传，传进去的是普通指针，sizeof()显示的是指针的大小，
-    // 而不是数组的大小，所以要有参数说明数组的大小。
+int main(int argc, char *argv[]){  
 
     char content[100];   
     int res;
@@ -96,10 +87,10 @@ int main(int argc, char *argv[])
     parameters *second=(parameters *) malloc(sizeof(parameters));
     merge_data *third=(merge_data*) malloc(sizeof(merge_data));
     
-    strcpy((char *)file_name, argv[1]); // 获取要读取数据的文件名
-    freader=fopen((char *)file_name,"r"); //读取数据
-     while(fgets((char *)content,100,freader)!=NULL){
-         data_origin[num++]=strtol((char *)content,NULL,10);
+    strcpy(filename, argv[1]); // 获取要读取数据的文件名
+    freader=fopen(file_name,"r"); //读取数据
+     while(fgets(content,100,freader)!=NULL){
+         data_origin[num++]=strtol(content,NULL,10);
     }
 
     printf("数据读取完毕，一共%d个数据.\n",num);
