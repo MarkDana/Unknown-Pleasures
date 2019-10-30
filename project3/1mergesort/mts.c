@@ -87,17 +87,18 @@ int main(int argc, char *argv[]){
     merge_data *third=(merge_data*) malloc(sizeof(merge_data));
     
     if (!strcmp(argv[1],"-o")){
-        strcpy(file_name, argv[1]);
+        strcpy(file_name, argv[2]);
         freader=fopen(file_name,"r");
         while(fgets(content,100,freader)!=NULL)data_origin[num++]=strtol(content,NULL,10);
     }else{
-        printf("argc=%d\n",argc);
+        for (int argi=1;argi<argc;++argi){
+            strcpy(content, argv[argi]);
+            data_origin[num++]=strtol(content,NULL,10);
+        }
     }
     
-
-    printf("数据读取完毕，一共%d个数据.\n",num);
+    printf("%d ints loaded.\n",num);
     
-    //设置三个线程所需要参数的信息
     first->head=&(data_origin[0]);
     first->left=0;
     first->right=num/2-1;
@@ -112,7 +113,6 @@ int main(int argc, char *argv[]){
     third->num2=num-num/2;
     third->res=&(data_sorted[0]);
 
-    //创建两个sorting thread
     pthread_attr_init(&attr1); 
     pthread_create(&tid1,&attr1,sort_half, first); 
     pthread_attr_init(&attr2); 
@@ -120,19 +120,12 @@ int main(int argc, char *argv[]){
     pthread_join(tid1, NULL);
     pthread_join(tid2, NULL);
 
-    //两个sotring thread执行完，创建merging thread
     pthread_attr_init(&attr3); 
     pthread_create(&tid3,&attr3,merge, third); 
     pthread_join(tid3, NULL);
 
-    //提示是否输出结果
-    printf("是否输入排序后的结果? 0 表示不输出 1表示输出\n");
-    scanf("%d",&res);
-    if(res!=0){
-        printf("现把结果输出如下:\n");
-        for(int i=0;i<num;++i)
-            printf("%d\n",data_sorted[i]);
-    }
+    printf("sorted result: ");
+    for(int i=0;i<num;++i)printf("%d ",data_sorted[i]);
     return 0;
    
 }
