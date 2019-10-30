@@ -8,7 +8,6 @@ int data_origin[Max];
 int data_sorted[Max];
 FILE *freader;
 int num;
-char file_name[100];
 
 typedef struct{
 int *head;  // head of the array
@@ -79,7 +78,7 @@ void* merge(void *param){ // 进行归并
 
 int main(int argc, char *argv[]){  
 
-    char content[100];   
+    char content[100],file_name[100];;   
     int res;
     pthread_t tid1,tid2,tid3;
     pthread_attr_t attr1,attr2,attr3;
@@ -87,10 +86,11 @@ int main(int argc, char *argv[]){
     parameters *second=(parameters *) malloc(sizeof(parameters));
     merge_data *third=(merge_data*) malloc(sizeof(merge_data));
     
-    strcpy(filename, argv[1]); // 获取要读取数据的文件名
-    freader=fopen(file_name,"r"); //读取数据
-     while(fgets(content,100,freader)!=NULL){
-         data_origin[num++]=strtol(content,NULL,10);
+    strcpy(file_name, argv[1]);
+
+    freader=fopen(file_name,"r");
+     while(fgets((char *)content,100,freader)!=NULL){
+         data_origin[num++]=strtol((char *)content,NULL,10);
     }
 
     printf("数据读取完毕，一共%d个数据.\n",num);
