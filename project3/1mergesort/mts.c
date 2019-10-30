@@ -63,6 +63,11 @@ void* merge(void *param){ // 进行归并
     int num1=p->num1;
     int num2=p->num2;
     int i=0,j=0,k=0;
+    for (int puu=0;puu<num1;++puu)printf("%d ",array1[puu]);
+    printf("\n");
+    for (int puu=0;puu<num2;++puu)printf("%d ",array2[puu]);
+    printf("\n");
+
     while(i<num1&&j<num2){
         if(array1[i]<=array2[j]){
             res[k++]=array1[i++];
