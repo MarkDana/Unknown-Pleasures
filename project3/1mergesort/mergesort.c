@@ -126,6 +126,7 @@ int main(int argc, char *argv[]){
 
     printf("sorted result: ");
     for(int i=0;i<num;++i)printf("%d ",data_sorted[i]);
+    printf("\n");
     return 0;
    
 }
