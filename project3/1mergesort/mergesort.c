@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
     parameters *second=(parameters *) malloc(sizeof(parameters));
     merge_data *third=(merge_data*) malloc(sizeof(merge_data));
     
-    if (!strcmp(argv[1],"-o")){
+    if (!strcmp(argv[1],"-i")){
         strcpy(file_name, argv[2]);
         freader=fopen(file_name,"r");
         while(fgets(content,100,freader)!=NULL)data_origin[num++]=strtol(content,NULL,10);
