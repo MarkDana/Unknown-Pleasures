@@ -25,6 +25,7 @@ int *res;
 }merge_data;
 
 void quick_sort(int a[], int l, int r){
+    printf("sorting from %d to %d\n",l,r);
     if (l < r){
         int i,j,x;
         i = l;
