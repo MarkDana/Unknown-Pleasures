@@ -24,7 +24,7 @@ int *res;
 }merge_data;
 
 void quick_sort(int *a, int l, int r){
-    printf("sorting from %d to %d\n",l,r);
+    // printf("sorting from %d to %d\n",l,r);
     if (l < r){
         int i,j,x;
         i = l;
@@ -89,8 +89,8 @@ int main(int argc, char *argv[]){
     strcpy(file_name, argv[1]);
 
     freader=fopen(file_name,"r");
-     while(fgets((char *)content,100,freader)!=NULL){
-         data_origin[num++]=strtol((char *)content,NULL,10);
+     while(fgets(content,100,freader)!=NULL){
+         data_origin[num++]=strtol(content,NULL,10);
     }
 
     printf("数据读取完毕，一共%d个数据.\n",num);
