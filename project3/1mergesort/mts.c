@@ -11,7 +11,7 @@ int num;
 char file_name[100];
 
 typedef struct{
-int *head;  //head of the array
+int *head;  // head of the array
 int left;  // starting index
 int right;   // ending index
 }parameters;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     first->left=0;
     first->right=num/2-1;
 
-    second->head=&(data_origin[num/2]);
+    second->head=&(data_origin[0]);
     second->left=num/2;
     second->right=num-1;
 
