@@ -57,7 +57,7 @@ public class MergeSort extends RecursiveAction {
 
         // System.out.println(new File("."));
 
-        System.out.println(new File(".").getAbsolutePath());
+        System.out.println(new File("array.txt").getAbsolutePath());
         
     //     try{
     //     Scanner scanner = new Scanner(new File("array.txt"));
