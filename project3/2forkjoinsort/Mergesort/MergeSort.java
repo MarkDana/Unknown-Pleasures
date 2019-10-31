@@ -52,6 +52,9 @@ public class MergeSort extends RecursiveAction {
 
     public static void main(String[] args) {
 
+        System.out.println("Working Directory = " +
+              System.getProperty("."));
+
         System.out.println(new File("."));
         
         try{
