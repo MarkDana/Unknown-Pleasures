@@ -59,7 +59,7 @@ public class QuickSort extends RecursiveAction {
         System.out.println(Arrays.toString(array));
 
         ForkJoinPool pool = new ForkJoinPool();
-        MergeSort fork = new MergeSort(array,0,array.length-1);
+        QuickSort fork = new QuickSort(array,0,array.length-1);
         
         pool.invoke(fork);
         System.out.println(Arrays.toString(array));
