@@ -13,7 +13,7 @@ public class QuickSort extends RecursiveAction {
     private int array[];
     private int left;
     private int right;
-    private static final int THRESHOLD = 100;
+    private static final int THRESHOLD = 10;
     
     QuickSort(int[] array, int left, int right) {
         this.array = array;
