@@ -50,11 +50,19 @@ public class MergeSort extends RecursiveAction {
 
     public static void main(String[] args) {
 
-        int[] array = new int[20];
 
-        for (int i = 0; i < 20; i++) {
-            array[i] = new Random().nextInt(100);
-        }
+        Scanner scanner = new Scanner(new File("array.txt"));
+        int [] array = new int [1000];
+        int i = 0;
+        while(scanner.hasNextInt())tall[i++] = scanner.nextInt();
+
+
+
+        // int[] array = new int[20];
+
+        // for (int i = 0; i < 20; i++) {
+        //     array[i] = new Random().nextInt(100);
+        // }
 
         System.out.println(Arrays.toString(array));
 
