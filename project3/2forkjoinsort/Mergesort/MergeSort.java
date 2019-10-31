@@ -70,7 +70,7 @@ public class MergeSort extends RecursiveAction {
             Scanner scnr = new Scanner(arrtxt);
             List<Integer> temps = new ArrayList<Integer>();
             while(scnr.hasNextInt())temps.add(scnr.nextInt());
-            array = temps.toArray();
+            array = temps.stream().mapToInt(i->i).toArray();
         }else return;
         
 
