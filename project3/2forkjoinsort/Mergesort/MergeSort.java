@@ -4,6 +4,8 @@ import java.util.concurrent.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
@@ -65,9 +67,12 @@ public class MergeSort extends RecursiveAction {
         else if (args[0].equals("-i")){
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
-            int i = 0;
-            array = new int [1000];
-            while(scnr.hasNextInt())array[i++] = scnr.nextInt();
+            List<int> temps = new ArrayList<int>();
+            while(scnr.hasNextInt()){
+                int tmpint = scnr.nextInt();
+                temps.add(tmpint);
+            }
+            array = temps.toArray(new int[0]);
         }else return;
         
 
