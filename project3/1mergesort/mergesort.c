@@ -8,12 +8,16 @@ int data_origin[Max];
 int data_sorted[Max];
 FILE *freader;
 int num;
+char onenum[100],file_name[100]; 
+int res;
+pthread_t tid_l,tid_r,tid_m;
+pthread_attr_t attr_l,attr_r,attr_m;
 
 typedef struct{
 int *head;  // head of the array
 int left;  // starting index
 int right;   // ending index
-}parameters;
+}myarray;
 
 typedef struct{
 int *array1;
@@ -21,7 +25,7 @@ int num1;
 int *array2;
 int num2;
 int *res;
-}merge_data;
+}mymerge;
 
 void quick_sort(int *a, int l, int r){
     // printf("sorting from %d to %d\n",l,r);
@@ -43,8 +47,9 @@ void quick_sort(int *a, int l, int r){
     }
 }
 
-void* sort_half(void *param){
-    parameters *p=param;
+void* sort_half(void *arr){
+    //arr is a sruct myarray, for passing parameters
+    myarray *p=arr;
     int *head=p->head;
     int left=p->left;
     int right=p->right;
@@ -55,9 +60,9 @@ void* sort_half(void *param){
     pthread_exit(0);
 }
 
-void* merge(void *param){ // 进行归并
+void* merge(void *meg){
     printf("thread merge two sorted arrays.\n");
-    merge_data *p=param;
+    mymerge *p=meg;
     int *array1=p->array1;
     int *array2=p->array2;
     int *res=p->res;
@@ -78,51 +83,47 @@ void* merge(void *param){ // 进行归并
 
 int main(int argc, char *argv[]){  
 
-    char content[100],file_name[100]; 
-    int res;
-    pthread_t tid1,tid2,tid3;
-    pthread_attr_t attr1,attr2,attr3;
-    parameters *first=(parameters *) malloc(sizeof(parameters));
-    parameters *second=(parameters *) malloc(sizeof(parameters));
-    merge_data *third=(merge_data*) malloc(sizeof(merge_data));
+    myarray *array_l=(myarray *) malloc(sizeof(myarray));
+    myarray *array_r=(myarray *) malloc(sizeof(myarray));
+    mymerge *merge_lr=(mymerge*) malloc(sizeof(mymerge));
     
     if (!strcmp(argv[1],"-i")){
         strcpy(file_name, argv[2]);
         freader=fopen(file_name,"r");
-        while(fgets(content,100,freader)!=NULL)data_origin[num++]=strtol(content,NULL,10);
+        while(fgets(onenum,100,freader)!=NULL)data_origin[num++]=strtol(onenum,NULL,10);
     }else{
         for (int argi=1;argi<argc;++argi){
-            strcpy(content, argv[argi]);
-            data_origin[num++]=strtol(content,NULL,10);
+            strcpy(onenum, argv[argi]);
+            data_origin[num++]=strtol(onenum,NULL,10);
         }
     }
     
     printf("%d ints loaded.\n",num);
     
-    first->head=&(data_origin[0]);
-    first->left=0;
-    first->right=num/2-1;
+    array_l->head=&(data_origin[0]);
+    array_l->left=0;
+    array_l->right=num/2-1;
 
-    second->head=&(data_origin[0]);
-    second->left=num/2;
-    second->right=num-1;
+    array_r->head=&(data_origin[0]);
+    array_r->left=num/2;
+    array_r->right=num-1;
 
-    third->array1=&(data_origin[0]);
-    third->num1=num/2;
-    third->array2=&(data_origin[num/2]);
-    third->num2=num-num/2;
-    third->res=&(data_sorted[0]);
+    merge_lr->array1=&(data_origin[0]);
+    merge_lr->num1=num/2;
+    merge_lr->array2=&(data_origin[num/2]);
+    merge_lr->num2=num-num/2;
+    merge_lr->res=&(data_sorted[0]);
 
-    pthread_attr_init(&attr1); 
-    pthread_create(&tid1,&attr1,sort_half, first); 
-    pthread_attr_init(&attr2); 
-    pthread_create(&tid2,&attr2,sort_half, second); 
-    pthread_join(tid1, NULL);
-    pthread_join(tid2, NULL);
+    pthread_attr_init(&attr_l); 
+    pthread_create(&tid_l,&attr_l,sort_half, array_l); 
+    pthread_attr_init(&attr_r); 
+    pthread_create(&tid_r,&attr_r,sort_half, array_r); 
+    pthread_join(tid_l, NULL);
+    pthread_join(tid_r, NULL);
 
-    pthread_attr_init(&attr3); 
-    pthread_create(&tid3,&attr3,merge, third); 
-    pthread_join(tid3, NULL);
+    pthread_attr_init(&attr_m); 
+    pthread_create(&tid_m,&attr_m,merge, merge_lr); 
+    pthread_join(tid_m, NULL);
 
     printf("sorted result: ");
     for(int i=0;i<num;++i)printf("%d ",data_sorted[i]);
