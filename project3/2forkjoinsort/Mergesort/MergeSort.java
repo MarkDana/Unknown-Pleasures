@@ -64,17 +64,36 @@ public class MergeSort extends RecursiveAction {
     System.out.println(String.format("第%d位到第%d位排序完毕",low,high-1));
     }
 
-    public void merge(int mid) {
-        System.out.println(String.format("merge [%d,%d], [%d,%d]",left,mid,mid+1,right));
-        int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
-        while(i <= mid && j <= right){
-            if(array[i] <= array[j])temp[k++] = array[i++];
-            else temp[k++] = array[j++];
-        }
-        while(i <= mid) temp[k++] = array[i++];
-        while(j <= right) temp[k++] = array[j++];
-        for (k = left; k <= right; ++k)array[left + k] = temp[k];
+    // public void merge(int mid) {
+    //     System.out.println(String.format("merge [%d,%d], [%d,%d]",left,mid,mid+1,right));
+    //     int[] temp = new int[right - left + 1];
+    //     int i = left, j = mid + 1, k = 0;
+    //     while(i <= mid && j <= right){
+    //         if(array[i] <= array[j])temp[k++] = array[i++];
+    //         else temp[k++] = array[j++];
+    //     }
+    //     while(i <= mid) temp[k++] = array[i++];
+    //     while(j <= right) temp[k++] = array[j++];
+    //     for (k = left; k <= right; ++k)array[left + k] = temp[k];
+    // }
+
+    private void merge(int middle) {
+        int low=left;
+        int high=right+1;
+    if (array[middle - 1] < array[middle]) { //不需要合并的情况
+        return;
+    }
+    int copySize = high - low;
+    int[] copy=new int[copySize]; //开辟一个新数组
+    int i=low,j=middle,k=0;
+    while(i<middle && j<high){ // 合并到新数组里面
+        if(array[i]<=array[j]) copy[k++]=array[i++];
+        else copy[k++]=array[j++];
+    }
+    while(i<middle) copy[k++]=array[i++];
+    while(j<high) copy[k++]=array[j++];
+    for(i=low;i<high;++i) //拷贝回来
+        array[i]=copy[i-low];
     }
 
     public static void main(String[] args) {
