@@ -18,14 +18,17 @@ public class MergeSort extends RecursiveAction {
 
     public void compute() {
         int size = right - left + 1;
-        System.out.println(String.format("from %d to %d",left,right));
+        
         if (size <= 1)return;
         if (size <= THRESHOLD){
             Arrays.sort(array, left, right + 1);
             return;
         }//in java util, pass in the next index of ending
-
+        
         int mid = (left+right)>>1;
+        System.out.println(String.format("from %d to %d, mid=%d",left,right,mid));
+
+        
         MergeSort sortLeft = new MergeSort(array, left, mid);
         MergeSort sortRight = new MergeSort(array, mid+1, right);
         
