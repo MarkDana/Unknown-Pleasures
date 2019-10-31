@@ -26,6 +26,7 @@ definition for each sorting algorithm. The source code download for this text in
 5. 判断sub1或sub2中是否只有一个元素，如果只有一个元素则返回此元素，否则就将sub1（或是sub2）代回到第1步中继续执行
 
 按照题目中的提示，调用java的API：RecursiveAction。RecursiveAction 是 ForkJoinTask 的一个子类，它代表了一类最简单的 ForkJoinTask：不需要返回值，当子任务都执行完毕之后，不需要进行中间结果的组合。如果我们从 RecursiveAction 开始继承，那么我们只需要重载 `protected void compute()` 方法。重载的函数如下：
+
 ```c
     protected void compute() {
         if (serialThresholdMet()) {
@@ -66,6 +67,7 @@ definition for each sorting algorithm. The source code download for this text in
 如果j<=n ,  将r[j…n] 存入rf[k…n] //后一子表非空
 5. 合并结束。
 归并排序同样调用RecursiveAction，重载compute函数，但是需要注意的是，这里采用invokeall函数进行归并。这是`ForkJoinTask`的一个方法，代码如下：
+
 ```java
 public static void invokeAll(ForkJoinTask<?> t1, ForkJoinTask<?> t2) {
     int s1, s2;
@@ -81,6 +83,7 @@ public static void invokeAll(ForkJoinTask<?> t1, ForkJoinTask<?> t2) {
 2，再执行 t1 的 doInvoke 方法，让 t1 同步执行。 
 3，当 t1 执行完后，执行 t2 的 doJoin 方法，执行 t2 任务。
 重载的compute函数如下：
+
 ```java
     @Override
     protected void compute() {
