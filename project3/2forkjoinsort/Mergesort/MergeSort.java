@@ -47,10 +47,10 @@ public class MergeSort extends RecursiveAction {
 
     public static void main(String[] args) {
 
-        int[] array = new int[20];
+        int[] array = new int[1000];
 
-        for (int i = 0; i <= 19; i++) {
-            array[i] = new Random().nextInt(100);
+        for (int i = 0; i <= 1000; i++) {
+            array[i] = new Random().nextInt(10000);
         }
 
         System.out.println(Arrays.toString(array));
