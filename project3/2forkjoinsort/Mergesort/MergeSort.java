@@ -44,6 +44,7 @@ public class MergeSort extends RecursiveAction {
     }
 
     public void merge(int mid) {
+        if (array[mid] <= array[mid + 1]) return;
         int[] temp = new int[right - left + 1];
         int i = left, j = mid + 1, k = 0;
         while(i <= mid && j <= right){
