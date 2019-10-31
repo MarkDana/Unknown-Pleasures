@@ -52,28 +52,18 @@ public class MergeSort extends RecursiveAction {
     }
 
     public static void main(String[] args) throws FileNotFoundException{
-
-        // System.out.println("Working Directory = " +
-        //       System.getProperty("."));
-
-        // System.out.println(new File("."));
-
-        
-        // System.out.println(new File(args[0]).getAbsolutePath());
-        
-        File arrtxt = new File("array.txt");
-        // System.out.println("array.txt".getAbsolutePath());
-        Scanner scnr = new Scanner(arrtxt);
         int [] array = new int [1000];
-        int i = 0;
-        while(scnr.hasNextInt())array[i++] = scnr.nextInt();
+        if (args[0]=="-r"){
+            int n = Integer.parseInt(args[1]);
+            for (int i = 0; i < n; ++i)array[i] = random.nextInt();
+        }
+        if (args[0]=="-i"){
+            File arrtxt = new File(args[1]);
+            Scanner scnr = new Scanner(arrtxt);
+            int i = 0;
+            while(scnr.hasNextInt())array[i++] = scnr.nextInt();
+        }
         
-
-        // int[] array = new int[20];
-
-        // for (int i = 0; i < 20; i++) {
-        //     array[i] = new Random().nextInt(100);
-        // }
 
         System.out.println(Arrays.toString(array));
 
