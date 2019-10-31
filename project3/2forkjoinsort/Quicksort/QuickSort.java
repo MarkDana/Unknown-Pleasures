@@ -63,5 +63,6 @@ public class QuickSort extends RecursiveAction {
         
         pool.invoke(fork);
         System.out.println(Arrays.toString(array));
+    }
 }
 
