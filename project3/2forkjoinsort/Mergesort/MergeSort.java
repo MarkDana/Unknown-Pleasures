@@ -58,7 +58,7 @@ public class MergeSort extends RecursiveAction {
             int n = Integer.parseInt(args[1]);
             Random random = new Random(0);
             array = new int [n];
-            for (int i = 0; i < n; ++i)array[i] = random.nextInt();
+            for (int i = 0; i < n; ++i)array[i] = random.nextInt(1000);
             System.out.println(String.format("n=%d",n));
         
         }
