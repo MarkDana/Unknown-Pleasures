@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
-    // private int array[];
-    // private int left;
-    // private int right;
-    // private static final int THRESHOLD = 3;
+    private int array[];
+    private int low;
+    private int high;
+    private static final int THRESHOLD = 3;
 
-    private final int[] array; //排序的数组，由于传进来的数组在堆里，而且是引用传递，所以这个数组是所有线程共享的
-    private final int low; // 需要排序的最低一位
-    private final int high; //需要排序的最高一位的后一位
-    private final int THRESHOLD=3; //低于这个阈值，不需要再归并排序，直接排序即可
+    // private final int[] array; //排序的数组，由于传进来的数组在堆里，而且是引用传递，所以这个数组是所有线程共享的
+    // private final int low; // 需要排序的最低一位
+    // private final int high; //需要排序的最高一位的后一位
+    // private final int THRESHOLD=3; //低于这个阈值，不需要再归并排序，直接排序即可
     
 
     // MergeSort(int[] array, int left, int right) {
