@@ -5,49 +5,46 @@ import java.util.Scanner;
 
 public class QuickSort extends RecursiveAction {
 
-    private final int[] array; //排序的数组，由于传进来的数组在堆里，而且是引用传递，所以这个数组是所有线程共享的
-    private final int low; // 需要排序的最低一位
-    private final int high; //需要排序的最高一位的后一位
-    private final int threshold=128; //低于这个阈值，不需要再归并排序，直接排序即可
+    private int array[];
+    private int left;
+    private int right;
+    private static final int THRESHOLD = 100;
     
-    QuickSort(int[] array, int low, int high) {
-	this.array = array;
-	this.low = low;
-	this.high = high;
+    QuickSort(int[] array, int left, int right) {
+        this.array = array;
+        this.left = left;
+        this.right = right;
+        System.out.println(String.format("Creating sub-sort %d to %d",left,right));
     }
 
     public void compute() {
-	int size = high - low;
-    System.out.println(String.format("本线程负责第%d位到第%d位的数字",low,high-1));
-	if (size <= threshold) { // 直接排序
-	    Arrays.sort(array, low, high);
-	}
-	else {
-        int middle=divide(); //进行划分
-        QuickSort leftTask = new QuickSort(array, low, middle-1);
-        QuickSort rightTask = new QuickSort(array, middle+1,high);
-        leftTask.fork(); // 对左边进行快速排序
-        rightTask.fork(); //对右边进行快速排序
-        leftTask.join(); // 等待左边快速排序执行完
-        rightTask.join(); // 等待右边快速排序执行完
-    
-	}
-    System.out.println(String.format("第%d位到第%d位排序完毕",low,high-1));
-    }
-
-    private int divide() { // 划分
-        int pivot=array[low]; // 找出划分元素
-        int middle=low;
-        int l=low,r=high-1;
-        while(l<r){
-            while(l<r && array[r]>=pivot) --r; //比划分元素大，留在右边
-                array[l]=array[r]; //移到左边
-            while(l<r && array[l]<=pivot) ++l;; // 比划分元素小，留在左边
-                array[r]=array[l]; //移到右边
+	int size = right - left + 1;
+        if (size <= 1)return;
+        if (size <= THRESHOLD){
+            Arrays.sort(array, left, right + 1);
+            return;
         }
-    array[l]=pivot; // 放置划分元素
-    return l; //返回所在位置
-	
+
+        int pi = pivotIndex();
+        QuickSort sortLeft = new QuickSort(array, left, pi);
+        QuickSort sortRight = new QuickSort(array, pi+1, right);
+        
+        sortLeft.fork();
+        sortRight.fork();
+        sortLeft.join();
+        sortRight.join();
+
+    private int pivotIndex() {
+        int pivot = array[left];
+        int l = left, r = right;
+        while(l < r){
+            while(l < r && array[r] >= pivot) --r;
+            array[l] = array[r];
+            while(l < r && array[l] <= pivot) ++l;
+            array[r] = array[l];
+        }
+        array[l] = pivot;
+        return l;
     }
 
     public static void main(String[] args) {
@@ -60,7 +57,7 @@ public class QuickSort extends RecursiveAction {
 	}
 	
     ForkJoinPool pool = new ForkJoinPool();
-    QuickSort task=new QuickSort(array, 0, array.length);
+    QuickSort task=new QuickSort(array, 0, array.length-1);
     pool.invoke(task);
     // ForkJoinPool invoke、execute和submit区别 https://blog.csdn.net/Thousa_Ho/article/details/89164259
     System.out.println();
