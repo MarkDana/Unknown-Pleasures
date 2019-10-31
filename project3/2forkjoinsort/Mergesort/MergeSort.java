@@ -42,7 +42,7 @@ public class MergeSort extends RecursiveAction {
         }
         while(i <= mid) temp[k++] = array[i++];
         while(j <= right) temp[k++] = array[j++];
-        for (k = left; k <= right; ++k)array[left + z] = temp[z];
+        for (k = left; k <= right; ++k)array[left + k] = temp[k];
     }
 
     public static void main(String[] args) {
