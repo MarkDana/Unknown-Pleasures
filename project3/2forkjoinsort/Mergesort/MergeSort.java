@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.*;
+import java.util.Scanner;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
