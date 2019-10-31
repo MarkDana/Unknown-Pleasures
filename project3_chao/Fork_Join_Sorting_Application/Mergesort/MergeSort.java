@@ -8,7 +8,7 @@ public class MergeSort extends RecursiveAction {
     private final int[] array; //排序的数组，由于传进来的数组在堆里，而且是引用传递，所以这个数组是所有线程共享的
     private final int low; // 需要排序的最低一位
     private final int high; //需要排序的最高一位的后一位
-    private final int threshold=128; //低于这个阈值，不需要再归并排序，直接排序即可
+    private final int threshold=3; //低于这个阈值，不需要再归并排序，直接排序即可
     
     MergeSort(int[] array, int low, int high) {
 	this.array = array;
