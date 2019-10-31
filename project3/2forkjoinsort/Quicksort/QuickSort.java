@@ -54,7 +54,7 @@ public class QuickSort extends RecursiveAction {
         return l;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
     	int [] array;
         System.out.println(String.format("arg0=%s",args[0]));
         if (args[0].equals("-r")){
