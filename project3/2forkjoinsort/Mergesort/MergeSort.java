@@ -18,6 +18,8 @@ public class MergeSort extends RecursiveAction {
 
     public void compute() {
         int size = right - left + 1;
+        System.out.println(String.format("left=%d, right=%d, size=%d",left,right,size));
+
         
         if (size <= 1)return;
         if (size <= THRESHOLD){
@@ -32,12 +34,12 @@ public class MergeSort extends RecursiveAction {
         MergeSort sortLeft = new MergeSort(array, left, mid);
         MergeSort sortRight = new MergeSort(array, mid+1, right);
         
-        // sortLeft.fork();
-        // sortRight.fork();
-        // sortLeft.join();
-        // sortRight.join();
+        sortLeft.fork();
+        sortRight.fork();
+        sortLeft.join();
+        sortRight.join();
 
-        invokeAll(sortLeft,sortRight);
+        // invokeAll(sortLeft,sortRight);
         merge(mid);
     }
 
