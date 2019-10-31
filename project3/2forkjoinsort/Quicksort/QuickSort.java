@@ -33,6 +33,7 @@ public class QuickSort extends RecursiveAction {
         sortRight.fork();
         sortLeft.join();
         sortRight.join();
+    }
 
     private int pivotIndex() {
         int pivot = array[left];
