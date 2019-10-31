@@ -52,18 +52,19 @@ public class MergeSort extends RecursiveAction {
     }
 
     public static void main(String[] args) throws FileNotFoundException{
-        
+        int [] array;
         if (args[0]=="-r"){
             int n = Integer.parseInt(args[1]);
             Random random = new Random(0);
-            int [] array = new int [n];
+            array = new int [n];
             for (int i = 0; i < n; ++i)array[i] = random.nextInt();
         }
-        if (args[0]=="-i"){
+        // if (args[0]=="-i"){
+        else{
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
             int i = 0;
-            int [] array = new int [1000];
+            array = new int [1000];
             while(scnr.hasNextInt())array[i++] = scnr.nextInt();
         }
         
