@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
@@ -68,10 +69,7 @@ public class MergeSort extends RecursiveAction {
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
             List<Integer> temps = new ArrayList<Integer>();
-            while(scnr.hasNextInt()){
-                int tmpint = scnr.nextInt();
-                temps.add(tmpint);
-            }
+            while(scnr.hasNextInt())temps.add(scnr.nextInt());
             array = temps.toArray(new Integer[0]);
         }else return;
         
