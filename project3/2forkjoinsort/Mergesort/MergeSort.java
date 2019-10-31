@@ -3,13 +3,14 @@ import java.util.Random;
 import java.util.concurrent.*;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
     private int array[];
     private int left;
     private int right;
-    private static final int THRESHOLD = 3;
+    private static final int THRESHOLD = 100;
 
     MergeSort(int[] array, int left, int right) {
         this.array = array;
