@@ -16,7 +16,7 @@ public class MergeSort extends RecursiveAction {
     }
 
     public void compute() {
-        int size = right - low + 1;
+        int size = right - left + 1;
         if (size <= 1)return;
         if (size <= THRESHOLD){
             Arrays.sort(array, left, right + 1);
