@@ -48,7 +48,7 @@ public class MergeSort extends RecursiveAction {
         int high=right+1;
     int size = high - low;
     System.out.println(String.format("本线程负责第%d位到第%d位的数字",low,high-1));
-    if (size <= threshold) { // 直接排序
+    if (size <= THRESHOLD) { // 直接排序
         Arrays.sort(array, low, high);
     }
     else { //分治 
