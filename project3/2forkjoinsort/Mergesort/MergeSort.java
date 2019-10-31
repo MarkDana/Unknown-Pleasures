@@ -7,7 +7,7 @@ public class MergeSort extends RecursiveAction {
     private int array[];
     private int left;
     private int right;
-    private static final int THRESHOLD = 100;
+    private static final int THRESHOLD = 3;
 
     MergeSort(int[] array, int left, int right) {
         this.array = array;
@@ -47,10 +47,10 @@ public class MergeSort extends RecursiveAction {
 
     public static void main(String[] args) {
 
-        int[] array = new int[1000];
+        int[] array = new int[20];
 
-        for (int i = 0; i < 1000; i++) {
-            array[i] = new Random().nextInt(10000);
+        for (int i = 0; i < 20; i++) {
+            array[i] = new Random().nextInt(100);
         }
 
         System.out.println(Arrays.toString(array));
