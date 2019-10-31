@@ -61,14 +61,12 @@ public class MergeSort extends RecursiveAction {
         
         // System.out.println(new File(args[0]).getAbsolutePath());
         
-        try{
-        File file = new File(args[0]);
+        File file = new File("array.txt");
+        System.out.println(file.getAbsolutePath());
         Scanner scanner = new Scanner(file);
         int [] array = new int [1000];
         int i = 0;
-        while(scanner.hasNextInt())array[i++] = scanner.nextInt();}
-    catch (Exception exp) {
-        exp.printStackTrace();}
+        while(scanner.hasNextInt())array[i++] = scanner.nextInt();
         
 
 
