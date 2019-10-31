@@ -10,11 +10,19 @@ public class MergeSort extends RecursiveAction {
     private int right;
     private static final int THRESHOLD = 3;
 
-    MergeSort(int[] array, int left, int right) {
-        this.array = array;
-        this.left = left;
-        this.right = right;
-        System.out.println(String.format("creating sort %d to %d",left,right-1));
+    // MergeSort(int[] array, int left, int right) {
+    //     this.array = array;
+    //     this.left = left;
+    //     this.right = right;
+    //     System.out.println(String.format("creating sort %d to %d",left,right-1));
+    // }
+
+    MergeSort(int[] array, int low, int high) {
+    this.array = array;
+    this.low = low;
+    this.high = high;
+    System.out.println(String.format("creating sort %d to %d",low,high));
+    // 
     }
 
     // public void compute() {
@@ -45,8 +53,6 @@ public class MergeSort extends RecursiveAction {
     // }
 
     public void compute() {
-        int low=left;
-        int high=right+1;
     int size = high - low;
     System.out.println(String.format("本线程负责第%d位到第%d位的数字",low,high-1));
     if (size <= THRESHOLD) { // 直接排序
@@ -79,8 +85,6 @@ public class MergeSort extends RecursiveAction {
     // }
 
     private void merge(int middle) {
-        int low=left;
-        int high=right+1;
     if (array[middle - 1] < array[middle]) { //不需要合并的情况
         return;
     }
