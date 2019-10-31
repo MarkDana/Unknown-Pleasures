@@ -67,12 +67,12 @@ public class MergeSort extends RecursiveAction {
         else if (args[0].equals("-i")){
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
-            List<int> temps = new ArrayList<int>();
+            List<Integer> temps = new ArrayList<Integer>();
             while(scnr.hasNextInt()){
                 int tmpint = scnr.nextInt();
                 temps.add(tmpint);
             }
-            array = temps.toArray(new int[0]);
+            array = temps.toArray(new Integer[0]);
         }else return;
         
 
