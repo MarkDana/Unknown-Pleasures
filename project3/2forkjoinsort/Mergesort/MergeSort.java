@@ -54,7 +54,7 @@ public class MergeSort extends RecursiveAction {
     public static void main(String[] args) throws FileNotFoundException{
         int [] array;
         System.out.println(String.format("arg0=%s",args[0]));
-        if (args[0]=="-r"){
+        if (args[0].equals("-r")){
             int n = Integer.parseInt(args[1]);
             Random random = new Random(0);
             array = new int [n];
@@ -62,14 +62,13 @@ public class MergeSort extends RecursiveAction {
             System.out.println(String.format("n=%d",n));
         
         }
-        // if (args[0]=="-i"){
-        else{
+        if (args[0].equals("-i")){
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
             int i = 0;
             array = new int [1000];
             while(scnr.hasNextInt())array[i++] = scnr.nextInt();
-        }
+        }else return;
         
 
         System.out.println(Arrays.toString(array));
