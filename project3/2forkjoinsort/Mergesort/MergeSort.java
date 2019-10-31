@@ -1,9 +1,9 @@
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.*;
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class MergeSort extends RecursiveAction {
     //eg. [x,y,z], left=0, right=2
@@ -51,7 +51,7 @@ public class MergeSort extends RecursiveAction {
         for (k = left; k <= right; ++k)array[k] = temp[k-left];
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
 
         // System.out.println("Working Directory = " +
         //       System.getProperty("."));
