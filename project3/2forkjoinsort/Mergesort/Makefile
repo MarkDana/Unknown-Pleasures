@@ -1,4 +1,4 @@
 All: 
-	javac MergeSort.java 
+	javac ./MergeSort.java 
 clean:
-	rm *.class
+	rm ./*.class
