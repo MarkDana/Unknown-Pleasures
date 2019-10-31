@@ -53,6 +53,7 @@ public class MergeSort extends RecursiveAction {
 
     public static void main(String[] args) throws FileNotFoundException{
         int [] array;
+        System.out.println(String.format("arg0=%s",args[0]));
         if (args[0]=="-r"){
             int n = Integer.parseInt(args[1]);
             Random random = new Random(0);
