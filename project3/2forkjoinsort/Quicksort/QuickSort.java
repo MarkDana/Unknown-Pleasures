@@ -4,6 +4,9 @@ import java.util.concurrent.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 public class QuickSort extends RecursiveAction {
 
@@ -65,9 +68,9 @@ public class QuickSort extends RecursiveAction {
         else if (args[0].equals("-i")){
             File arrtxt = new File(args[1]);
             Scanner scnr = new Scanner(arrtxt);
-            int i = 0;
-            array = new int [1000];
-            while(scnr.hasNextInt())array[i++] = scnr.nextInt();
+            List<Integer> temps = new ArrayList<Integer>();
+            while(scnr.hasNextInt())temps.add(scnr.nextInt());
+            array = temps.stream().mapToInt(i->i).toArray();
         }else return;
 
         System.out.println(Arrays.toString(array));
