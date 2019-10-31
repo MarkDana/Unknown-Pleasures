@@ -16,31 +16,52 @@ public class MergeSort extends RecursiveAction {
         System.out.println(String.format("creating sort %d to %d",left,right));
     }
 
+    // public void compute() {
+    //     int size = right - left + 1;
+    //     System.out.println(String.format("left=%d, right=%d, size=%d",left,right,size));
+
+        
+    //     if (size <= 1)return;
+    //     if (size <= THRESHOLD){
+    //         Arrays.sort(array, left, right + 1);
+    //         return;
+    //     }//in java util, pass in the next index of ending
+        
+    //     int mid = (left+right)>>1;
+    //     System.out.println(String.format("from %d to %d, mid=%d",left,right,mid));
+
+        
+    //     MergeSort sortLeft = new MergeSort(array, left, mid);
+    //     MergeSort sortRight = new MergeSort(array, mid+1, right);
+        
+    //     sortLeft.fork();
+    //     sortRight.fork();
+    //     sortLeft.join();
+    //     sortRight.join();
+
+    //     // invokeAll(sortLeft,sortRight);
+    //     merge(mid);
+    // }
+
     public void compute() {
-        int size = right - left + 1;
-        System.out.println(String.format("left=%d, right=%d, size=%d",left,right,size));
-
-        
-        if (size <= 1)return;
-        if (size <= THRESHOLD){
-            Arrays.sort(array, left, right + 1);
-            return;
-        }//in java util, pass in the next index of ending
-        
-        int mid = (left+right)>>1;
-        System.out.println(String.format("from %d to %d, mid=%d",left,right,mid));
-
-        
-        MergeSort sortLeft = new MergeSort(array, left, mid);
-        MergeSort sortRight = new MergeSort(array, mid+1, right);
-        
-        sortLeft.fork();
-        sortRight.fork();
-        sortLeft.join();
-        sortRight.join();
-
-        // invokeAll(sortLeft,sortRight);
-        merge(mid);
+        int low=left;
+        int high=right+1;
+    int size = high - low;
+    System.out.println(String.format("本线程负责第%d位到第%d位的数字",low,high-1));
+    if (size <= threshold) { // 直接排序
+        Arrays.sort(array, low, high);
+    }
+    else { //分治 
+        int middle = low + (size >> 1);
+        MergeSort leftTask = new MergeSort(array, low, middle); 
+        MergeSort rightTask = new MergeSort(array, middle, high);
+        leftTask.fork(); //前一半进行归并排序
+        rightTask.fork(); //对后一半进行归并排序
+        leftTask.join(); //等待执行完成
+        rightTask.join();
+        merge(middle); //把结果进行合并
+    }
+    System.out.println(String.format("第%d位到第%d位排序完毕",low,high-1));
     }
 
     public void merge(int mid) {
