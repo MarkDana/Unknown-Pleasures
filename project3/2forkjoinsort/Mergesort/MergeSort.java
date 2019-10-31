@@ -83,10 +83,10 @@ class Main extends RecursiveAction {
         this.right = right;
     }
 
-    /**
+    *
      * Inherited from RecursiveAction.
      * Compare it with the run method of a Thread.
-     */
+     
     @Override
     protected void compute() {
         if (left < right) {
