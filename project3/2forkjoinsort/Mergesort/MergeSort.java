@@ -29,10 +29,12 @@ public class MergeSort extends RecursiveAction {
         MergeSort sortLeft = new MergeSort(array, left, mid);
         MergeSort sortRight = new MergeSort(array, mid+1, right);
         
-        sortLeft.fork();
-        sortRight.fork();
-        sortLeft.join();
-        sortRight.join();
+        // sortLeft.fork();
+        // sortRight.fork();
+        // sortLeft.join();
+        // sortRight.join();
+
+        invokeAll(sortLeft,sortRight);
         merge(mid);
     }
 
