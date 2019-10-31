@@ -45,31 +45,23 @@ public class QuickSort extends RecursiveAction {
             array[r] = array[l];
         }
         array[l] = pivot;
+        System.out.println(String.format("Pivot index of [%d,%d] is %d",left,right,l));
         return l;
     }
 
     public static void main(String[] args) {
-	int n = Integer.parseInt(args[0]);
-    System.out.println(String.format("一共随机生成了%d个数字",n));
-	Random random = new Random(0);
-	int[] array = new int[n];
-	for (int i = 0; i < n; ++i) {
-	    array[i] = random.nextInt();
-	}
-	
-    ForkJoinPool pool = new ForkJoinPool();
-    QuickSort task=new QuickSort(array, 0, array.length-1);
-    pool.invoke(task);
-    // ForkJoinPool invoke、execute和submit区别 https://blog.csdn.net/Thousa_Ho/article/details/89164259
-    System.out.println();
-    Scanner sc = new Scanner(System.in); 
-    System.out.println("是否输入排序后的结果? 0 表示不输出 1表示输出"); 
-    String content = sc.nextLine();
-    int choose = Integer.parseInt(content); 
-    if(choose!=0){
-        for(int i=0;i<n;++i)  System.out.println(array[i]); 
-    }
+    	int[] array = new int[200];
 
-    }
+        for (int i = 0; i < 200; i++) {
+            array[i] = new Random().nextInt(1000);
+        }
+
+        System.out.println(Arrays.toString(array));
+
+        ForkJoinPool pool = new ForkJoinPool();
+        MergeSort fork = new MergeSort(array,0,array.length-1);
+        
+        pool.invoke(fork);
+        System.out.println(Arrays.toString(array));
 }
 
