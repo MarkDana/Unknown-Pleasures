@@ -4,4 +4,4 @@ mergesort.o: mergesort.c
 	gcc -c mergesort.c 
 clean:
 	rm *.o
-	rm mts
+	rm mergesort
