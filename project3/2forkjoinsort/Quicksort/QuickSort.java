@@ -56,14 +56,11 @@ public class QuickSort extends RecursiveAction {
 
     public static void main(String[] args) throws FileNotFoundException{
     	int [] array;
-        System.out.println(String.format("arg0=%s",args[0]));
         if (args[0].equals("-r")){
             int n = Integer.parseInt(args[1]);
             Random random = new Random(0);
             array = new int [n];
             for (int i = 0; i < n; ++i)array[i] = random.nextInt(1000);
-            System.out.println(String.format("n=%d",n));
-        
         }
         else if (args[0].equals("-i")){
             File arrtxt = new File(args[1]);
