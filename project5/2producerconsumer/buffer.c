@@ -30,7 +30,7 @@ int insert_item(buffer_item item){//no need to return -1 indicating failure
     tail = (tail + 1) % BUFFER_SIZE;
     pthread_mutex_unlock(&mutex);
     sem_post(&full);
-    printf("produced item %d to buffer\n" % item);
+    printf("produced item %d to buffer\n",item);
     return 0;
 }
 
@@ -38,10 +38,10 @@ int remove_item(buffer_item *item){
     sem_wait(&full);
     pthread_mutex_lock(&mutex);
     *item = buffer[head];
-    head = (head + 1) % QUEUE_SIZE;
+    head = (head + 1) % BUFFER_SIZE;
     pthread_mutex_unlock(&mutex);
     sem_post(&empty);
-    printf("consumed item %d from buffer\n" % *item);
+    printf("consumed item %d from buffer\n",*item);
     return 0;
 }
 
