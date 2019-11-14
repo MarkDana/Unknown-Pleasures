@@ -7,7 +7,7 @@
 #include <time.h>
 int randomM(int m){return rand()%m;}
 const int MAXTASKID = 1001;
-const int MAXWAIT = 100000000;
+const int MAXWAIT = 1000000;
 
 buffer_item buffer[BUFFER_SIZE];
 int head, tail;
@@ -46,8 +46,9 @@ int remove_item(buffer_item *item, int consumer_id){
     return 0;
 }
 
-void *producer(void *param){ 
+void *producer(void *param){
     int producer_id = *(int *)param;
+    printf("producer %d\n",producer_id);
     buffer_item item;
     while (1){
         usleep(randomM(MAXWAIT));
@@ -58,7 +59,8 @@ void *producer(void *param){
 }
 
 void *consumer(void *param){
-    int consumer_id = *(int *)param; 
+    int consumer_id = *(int *)param;
+    printf("consumer %d\n",consumer_id);
     buffer_item item;
     while(1){
         usleep(randomM(MAXWAIT));
@@ -79,9 +81,9 @@ void pool_init(int nump, int numc){
     for(int i=0; i<num_producer; ++i)pthread_create(&producer_bee[i], NULL, producer, &i);
     for(int i=0; i<num_consumer; ++i)pthread_create(&consumer_bee[i], NULL, consumer, &i);
         
-    sem_init(&full,0,0);
-    sem_init(&empty,0,BUFFER_SIZE);
-    pthread_mutex_init(&mutex,NULL);
+    sem_init(&full, 0, 0);
+    sem_init(&empty, 0, BUFFER_SIZE);
+    pthread_mutex_init(&mutex, NULL);
 }
 
 void pool_shutdown(void){
