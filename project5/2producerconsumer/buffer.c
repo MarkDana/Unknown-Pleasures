@@ -18,7 +18,7 @@ sem_t full;
 int num_producer,num_consumer;
 pthread_t *producer_bee,*consumer_bee;
 
-int insert_item(buffer_item item){//no need to return -1 indicating failure
+int insert_item(buffer_item item, int producer_id){//no need to return -1 indicating failure
     sem_wait(&empty);
     pthread_mutex_lock(&mutex);
     // if (sizenow == BUFFER_SIZE){
@@ -30,37 +30,38 @@ int insert_item(buffer_item item){//no need to return -1 indicating failure
     tail = (tail + 1) % BUFFER_SIZE;
     pthread_mutex_unlock(&mutex);
     sem_post(&full);
-    printf("produced item %d to buffer\n",item);
+    printf("producer %d -> item %d -> buffer\n",producer_id, item);
     return 0;
 }
 
-int remove_item(buffer_item *item){
+int remove_item(buffer_item *item, int consumer_id){
     sem_wait(&full);
     pthread_mutex_lock(&mutex);
     *item = buffer[head];
     head = (head + 1) % BUFFER_SIZE;
     pthread_mutex_unlock(&mutex);
     sem_post(&empty);
-    printf("consumed item %d from buffer\n",*item);
+    printf("consumer %d <- item %d <- buffer\n",consumer_id, *item);
     return 0;
 }
 
-void *producer(void *param){   
+void *producer(void *param){ 
+    int producer_id = *(int *)param;
     buffer_item item;
     while (1){
         usleep(randomM(MAX));
         item=randomM(MAX);
-        insert_item(item);
+        insert_item(item, producer_id);
     }
     pthread_exit(0);
 }
 
-void *consumer(void *param)
-{
+void *consumer(void *param){
+    int consumer_id = *(int *)param; 
     buffer_item item;
     while(1){
         usleep(randomM(MAX));
-        remove_item(&item);
+        remove_item(&item, consumer_id);
     }
     pthread_exit(0);
 }
@@ -74,8 +75,8 @@ void pool_init(int nump, int numc){
     producer_bee = (pthread_t*)malloc(sizeof(pthread_t) *num_producer);
     consumer_bee = (pthread_t*)malloc(sizeof(pthread_t) *num_consumer);
     
-    for(int i=0; i<num_producer; ++i)pthread_create(&producer_bee[i], NULL, producer, NULL);
-    for(int i=0; i<num_consumer; ++i)pthread_create(&consumer_bee[i], NULL, consumer, NULL);
+    for(int i=0; i<num_producer; ++i)pthread_create(&producer_bee[i], NULL, producer, &i);
+    for(int i=0; i<num_consumer; ++i)pthread_create(&consumer_bee[i], NULL, consumer, &i);
         
     sem_init(&full,0,0);
     sem_init(&empty,0,BUFFER_SIZE);

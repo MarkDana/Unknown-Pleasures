@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
     int nump = atoi(argv[2]);
     int numc = atoi(argv[3]);
     pool_init(nump, numc);
-    usleep(sleep_time);
+    sleep(sleep_time); //seconds
     pool_shutdown();
     return 0;
 }
