@@ -7,7 +7,7 @@
 #include <time.h>
 int randomM(int m){return rand()%m;}
 const int MAXTASKID = 1001;
-const int MAXWAIT = 100000;
+const int MAXWAIT = 1000000;
 
 buffer_item buffer[BUFFER_SIZE];
 int head, tail;
