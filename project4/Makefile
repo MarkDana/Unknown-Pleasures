@@ -10,11 +10,11 @@ CC=gcc
 CFLAGS=-Wall
 
 all:
-	fcfs
-	sjf
-	priority
-	rr
-	priority_rr
+	make fcfs
+	make sjf
+	make priority
+	make rr
+	make priority_rr
 
 clean:
 	rm -rf *.o
