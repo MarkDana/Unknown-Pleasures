@@ -50,7 +50,6 @@ void updateTask(){
     }
 }
 
-
 void schedule_is_rr(int isrr){
     while (1){
         curTask = nextTask();

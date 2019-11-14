@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         burst = atoi(strsep(&temp,","));
 
         // add the task to the scheduler's list of tasks
-        add(name,priority,burst);
+        add(name,priority,burst); //defined in schedulers.h
 
         free(temp);
     }
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     fclose(in);
 
     // invoke the scheduler
-    schedule();
+    schedule(); // defined in schedulers.h, inplemented in each scheduler_xxx.c
 
     return 0;
 }
