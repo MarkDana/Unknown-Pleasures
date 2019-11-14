@@ -29,7 +29,7 @@ void add(char *name, int priority, int burst){
     newtask->priority = priority;
     newtask->burst = burst;
     newtask->lastOut = 0;
-    insert(&waiting_head,newtask);
+    insert(&waitingHead,newtask);
 }
 
 Task* nextTask(){  //fcfs, from tail
@@ -55,7 +55,7 @@ void updateTask(){
 
 
 void schedule(){
-    while True{
+    while (True){
         curTask = nextTask();
         if(curTask == NULL)break;
         waitingTime += (curTime - curTask->lastOut);
