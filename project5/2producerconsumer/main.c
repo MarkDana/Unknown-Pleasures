@@ -4,9 +4,9 @@
 #include "buffer.h" 
 
 int main(int argc, char *argv[]){   
-    sleep_time = atoi(argv[1]);
-    nump = atoi(argv[2]);
-    numc = atoi(argv[3]);
+    int sleep_time = atoi(argv[1]);
+    int nump = atoi(argv[2]);
+    int numc = atoi(argv[3]);
     pool_init(int nump, int numc);
     usleep(sleep_time);
     pool_shutdown();
