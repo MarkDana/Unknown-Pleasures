@@ -55,7 +55,7 @@ void updateTask(){
 
 
 void schedule(){
-    while (true){
+    while (1){
         curTask = nextTask();
         if(curTask == NULL)break;
         waitingTime += (curTime - curTask->lastOut);
