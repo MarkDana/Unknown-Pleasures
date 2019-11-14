@@ -13,5 +13,5 @@ Task* nextTask(){
 }
 
 void schedule(){
-    schedule_is_rr(0);
+    schedule_is_rr(1);
 }
