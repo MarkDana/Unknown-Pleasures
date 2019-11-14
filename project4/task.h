@@ -12,7 +12,7 @@ typedef struct task {
     int priority;
     int burst;
 
-    int last_out_time;
+    int lastOut;
 } Task;
 
 //Task is alias to struct task
