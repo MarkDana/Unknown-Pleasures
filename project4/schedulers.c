@@ -9,21 +9,20 @@ int min(int a,int b){
     return a<b?a:b;
 }
 //maintain two lists to store tasks
-struct node* waitingHead = NULL;
-struct node* finishedHead = NULL;
-Task* curTask = NULL;
+waitingHead = NULL;
+finishedHead = NULL;
+curTask = NULL;
 
-int curTime = 0;
-int runTime = 0; //for the curTask
+curTime = 0;
+runTime = 0; //for the curTask
 
-int turnaroundTime = 0;
-int waitingTime = 0;
-int responseTime = 0;
+turnaroundTime = 0;
+waitingTime = 0;
+responseTime = 0;
 
-int value = 1;  //used for tid
-int numTasks = 0;  //
+value = 1;  //used for tid
+numTasks = 0;  //
 
-Task* nextTask();
 
 void add(char *name, int priority, int burst){
     Task* newtask = malloc(sizeof(Task));
