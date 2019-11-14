@@ -5,7 +5,7 @@
 #include <semaphore.h>
 #include "buffer.h"
 #include <time.h>
-int random(int m){reutrn rand()%m;}
+int randomM(int m){return rand()%m;}
 const int MAX = 1001;  //max 1ms
 
 buffer_item buffer[BUFFER_SIZE];
@@ -48,8 +48,8 @@ int remove_item(buffer_item *item){
 void *producer(void *param){   
     buffer_item item;
     while (1){
-        usleep(random(MAX));
-        item=random(MAX);
+        usleep(randomM(MAX));
+        item=randomM(MAX);
         insert_item(item);
     }
     pthread_exit(0);
@@ -59,7 +59,7 @@ void *consumer(void *param)
 {
     buffer_item item;
     while(1){
-        usleep(random(MAX));
+        usleep(randomM(MAX));
         remove_item(&item);
     }
     pthread_exit(0);
