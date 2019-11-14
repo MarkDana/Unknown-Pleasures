@@ -6,7 +6,8 @@
 #include "buffer.h"
 #include <time.h>
 int randomM(int m){return rand()%m;}
-const int MAX = 1001;  //max 1ms
+const int MAXTASKID = 1001;
+const int MAXWAIT = 100000;
 
 buffer_item buffer[BUFFER_SIZE];
 int head, tail;
@@ -49,8 +50,8 @@ void *producer(void *param){
     int producer_id = *(int *)param;
     buffer_item item;
     while (1){
-        usleep(randomM(MAX));
-        item=randomM(MAX);
+        usleep(randomM(MAXWAIT));
+        item=randomM(MAXTASKID);
         insert_item(item, producer_id);
     }
     pthread_exit(0);
@@ -60,7 +61,7 @@ void *consumer(void *param){
     int consumer_id = *(int *)param; 
     buffer_item item;
     while(1){
-        usleep(randomM(MAX));
+        usleep(randomM(MAXWAIT));
         remove_item(&item, consumer_id);
     }
     pthread_exit(0);
