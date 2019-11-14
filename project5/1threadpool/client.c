@@ -38,7 +38,7 @@ int main(void){
 
     sleep(3);
 
-    for (i=50; i<100; ++i){ //连续提交任务
+    for (int i=50; i<100; ++i){ //连续提交任务
         work[i].a = i;
         work[i].b = i;
         if (pool_submit(&add,&work[i])){
