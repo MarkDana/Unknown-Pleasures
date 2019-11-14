@@ -9,6 +9,13 @@
 CC=gcc
 CFLAGS=-Wall
 
+all:
+	fcfs
+	sjf
+	priority
+	rr
+	priority_rr
+
 clean:
 	rm -rf *.o
 	rm -rf fcfs
