@@ -23,6 +23,8 @@ int responseTime = 0;
 int value = 1;  //used for tid
 int numTasks = 0;  //
 
+Task* nextTask();
+
 void add(char *name, int priority, int burst){
     Task* newtask = malloc(sizeof(Task));
     newtask->tid = __sync_fetch_and_add(&value,1);

@@ -23,8 +23,8 @@ rr: driver.o list.o CPU.o schedule_rr.o
 sjf: driver.o list.o CPU.o schedule_sjf.o
 	$(CC) $(CFLAGS) -o sjf driver.o schedule_sjf.o list.o CPU.o
 
-fcfs: driver.o list.o CPU.o schedule_fcfs.o
-	$(CC) $(CFLAGS) -o fcfs driver.o schedule_fcfs.o list.o CPU.o
+fcfs: driver.o list.o CPU.o schedulers.o schedule_fcfs.o
+	$(CC) $(CFLAGS) -o fcfs driver.o schedule_fcfs.o schedulers.o list.o CPU.o
 
 priority: driver.o list.o CPU.o schedule_priority.o
 	$(CC) $(CFLAGS) -o priority driver.o schedule_priority.o list.o CPU.o
@@ -46,6 +46,9 @@ schedule_priority.o: schedule_priority.c
 
 schedule_rr.o: schedule_rr.c
 	$(CC) $(CFLAGS) -c schedule_rr.c
+
+schedulers.o: schedulers.c
+	$(CC) $(CFLAGS) -c schedulers.c
 
 list.o: list.c list.h
 	$(CC) $(CFLAGS) -c list.c
