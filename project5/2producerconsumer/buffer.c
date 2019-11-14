@@ -7,7 +7,8 @@
 #include <time.h>
 int randomM(int m){return rand()%m;}
 const int MAXTASKID = 1001;
-const int MAXWAIT = 1000000;
+const int MAXPRODUCERWAIT = 1000000;
+const int MAXCONSUMERWAIT = 5000000;
 
 buffer_item buffer[BUFFER_SIZE];
 int head, tail;
@@ -50,7 +51,7 @@ void *producer(void *param){
     int producer_id = *(int *)param;
     buffer_item item;
     while (1){
-        usleep(randomM(MAXWAIT));
+        usleep(randomM(MAXPRODUCERWAIT));
         item=randomM(MAXTASKID);
         insert_item(item, producer_id);
     }
@@ -61,7 +62,7 @@ void *consumer(void *param){
     int consumer_id = *(int *)param;
     buffer_item item;
     while(1){
-        usleep(randomM(5*MAXWAIT));
+        usleep(randomM(5*MAXCONSUMERWAIT));
         remove_item(&item, consumer_id);
     }
     pthread_exit(0);
@@ -81,7 +82,6 @@ void pool_init(int nump, int numc){
         pthread_create(&producer_bee[i], NULL, producer, &i);
     }
     for(int i=0; i<num_consumer; ++i){
-        printf("i=%d\n",i);
         usleep(10);
         pthread_create(&consumer_bee[i], NULL, consumer, &i);}
         
