@@ -37,7 +37,7 @@ Task* nextTask(){  //fcfs, from tail
     struct node* minNode = waitingHead; 
     if (nextNode == NULL)return NULL; 
     while (nextNode->next != NULL){
-        if (nextNode->next->burst < minNode->task->burst)minNode = nextNode->next;
+        if (nextNode->next->task->burst < minNode->task->burst)minNode = nextNode->next;
         nextNode = nextNode->next;
     }
     return minNode->task;
