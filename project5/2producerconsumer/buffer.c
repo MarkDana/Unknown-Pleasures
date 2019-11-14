@@ -48,7 +48,6 @@ int remove_item(buffer_item *item, int consumer_id){
 
 void *producer(void *param){
     int producer_id = *(int *)param;
-    printf("producer %d\n",producer_id);
     buffer_item item;
     while (1){
         usleep(randomM(MAXWAIT));
@@ -60,10 +59,9 @@ void *producer(void *param){
 
 void *consumer(void *param){
     int consumer_id = *(int *)param;
-    printf("consumer %d\n",consumer_id);
     buffer_item item;
     while(1){
-        usleep(randomM(MAXWAIT));
+        usleep(randomM(5*MAXWAIT));
         remove_item(&item, consumer_id);
     }
     pthread_exit(0);
@@ -79,8 +77,7 @@ void pool_init(int nump, int numc){
     consumer_bee = (pthread_t*)malloc(sizeof(pthread_t) *num_consumer);
     
     for(int i=0; i<num_producer; ++i){
-        printf("i=%d\n",i);
-        usleep(10);
+        usleep(10); //otherwise the threads will be created simultaneous, confusing id i
         pthread_create(&producer_bee[i], NULL, producer, &i);
     }
     for(int i=0; i<num_consumer; ++i){
