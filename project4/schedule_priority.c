@@ -64,7 +64,7 @@ void schedule(){
         if(curTask == NULL)break;
         waitingTime += (curTime - curTask->lastOut);
         if(curTask->lastOut == 0)responseTime += curTime;
-        runTime = min(QUANTUM,curTask->burst);
+        runTime = curTask->burst;
         run(curTask, runTime);
         for (int t=0;t<runTime;++t) ++curTime;
         updateTask();
