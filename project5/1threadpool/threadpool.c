@@ -101,6 +101,7 @@ void pool_init(void){
     pthread_mutex_init(&lock,NULL);
     for (int i=0; i<NUMBER_OF_THREADS; ++i){
         pthread_create(&bee[i], NULL, worker, NULL);
+    }
 }
 
 // shutdown the thread pool
