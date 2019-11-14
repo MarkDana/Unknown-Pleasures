@@ -80,10 +80,12 @@ void pool_init(int nump, int numc){
     
     for(int i=0; i<num_producer; ++i){
         printf("i=%d\n",i);
+        usleep(10);
         pthread_create(&producer_bee[i], NULL, producer, &i);
     }
     for(int i=0; i<num_consumer; ++i){
         printf("i=%d\n",i);
+        usleep(10);
         pthread_create(&consumer_bee[i], NULL, consumer, &i);}
         
     sem_init(&full, 0, 0);
