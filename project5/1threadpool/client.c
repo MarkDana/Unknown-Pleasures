@@ -25,16 +25,16 @@ int main(void){
     struct data work[100];
     pool_init();
 
-    printf("Now submit tasks with interval 5ms");
+    printf("Now submit tasks with interval 1ms\n");
     for (int i=0; i<50; ++i){
-        usleep(5000);  //5ms
+        usleep(1000);  //1ms
         work[i].a = i;
         work[i].b = i;
         if (pool_submit(&add,&work[i]))printf("submitting task%d failed\n", i);
         else printf("submitting task%d succeeded\n", i);
     }
 
-    printf("Now submit tasks with no interval time");
+    printf("Now submit tasks with no interval time\n");
 
     for (int i=50; i<100; ++i){
         work[i].a = i;
