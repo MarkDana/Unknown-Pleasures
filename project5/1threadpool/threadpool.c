@@ -24,7 +24,7 @@ task;
 
 // the work queue
 task worktodo[QUEUE_SIZE];
-int head, tail;
+int head, tail;  //use circle queue
 int isPoolOpen;
 int sizenow;
 sem_t semSize;
