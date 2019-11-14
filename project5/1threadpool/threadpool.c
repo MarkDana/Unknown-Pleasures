@@ -27,7 +27,7 @@ task worktodo[QUEUE_SIZE];
 int head, tail;
 int isPoolOpen;
 int sizenow;
-sem_t full;
+sem_t semSize;
 
 pthread_mutex_t lock;
 
@@ -47,14 +47,14 @@ int enqueue(task t)
     tail = (tail + 1) % QUEUE_SIZE;
     ++sizenow;
     pthread_mutex_unlock(&lock);
-    sem_post(&full);
+    sem_post(&semSize);
     return 0;
 }
 
 // remove a task from the queue
 task dequeue() {
     task work;
-    sem_wait(&full);
+    sem_wait(&semSize);  //acquire semaphore
     pthread_mutex_lock(&lock);
     work = worktodo[head];
     head = (head + 1) % QUEUE_SIZE;
@@ -97,7 +97,7 @@ void pool_init(void){
     tail = 0;
     sizenow = 0;
     isPoolOpen = 1;
-    sem_init(&full,0,0);
+    sem_init(&semSize,0,0);  //init as 0
     pthread_mutex_init(&lock,NULL);
     for (int i=0; i<NUMBER_OF_THREADS; ++i){
         pthread_create(&bee[i], NULL, worker, NULL);
@@ -109,4 +109,5 @@ void pool_shutdown(void){
     for (int i=0; i<NUMBER_OF_THREADS; ++i){
         pthread_cancel(bee[i]);
         pthread_join(bee[i],NULL);
+    }
 }
