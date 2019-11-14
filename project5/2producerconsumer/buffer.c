@@ -78,8 +78,13 @@ void pool_init(int nump, int numc){
     producer_bee = (pthread_t*)malloc(sizeof(pthread_t) *num_producer);
     consumer_bee = (pthread_t*)malloc(sizeof(pthread_t) *num_consumer);
     
-    for(int i=0; i<num_producer; ++i)pthread_create(&producer_bee[i], NULL, producer, &i);
-    for(int i=0; i<num_consumer; ++i)pthread_create(&consumer_bee[i], NULL, consumer, &i);
+    for(int i=0; i<num_producer; ++i){
+        printf("i=%d\n",i);
+        pthread_create(&producer_bee[i], NULL, producer, &i);
+    }
+    for(int i=0; i<num_consumer; ++i){
+        printf("i=%d\n",i);
+        pthread_create(&consumer_bee[i], NULL, consumer, &i);}
         
     sem_init(&full, 0, 0);
     sem_init(&empty, 0, BUFFER_SIZE);
