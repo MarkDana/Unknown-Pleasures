@@ -115,9 +115,9 @@ int main(int argc, char *argv[]){
     merge_lr->res=&(data_sorted[0]);
 
     pthread_attr_init(&attr_l); 
-    pthread_create(&tid_l,&attr_l,sort_half, array_l); 
+    pthread_create(&tid_l,&attr_l,sort_half, array_l);
     pthread_attr_init(&attr_r); 
-    pthread_create(&tid_r,&attr_r,sort_half, array_r); 
+    pthread_create(&tid_r,&attr_r,sort_half, array_r);
     pthread_join(tid_l, NULL);
     pthread_join(tid_r, NULL);
 
