@@ -25,32 +25,24 @@ int main(void){
     struct data work[100];
     pool_init();
 
+    printf("Now submit tasks with interval 5ms");
     for (int i=0; i<50; ++i){
-        usleep(10000);
+        usleep(5000);  //5ms
         work[i].a = i;
         work[i].b = i;
-        if (pool_submit(&add,&work[i])){
-            printf("提交任务%d失败!\n", i);
-        }else{
-             printf("提交任务%d成功!\n", i);
-        }
+        if (pool_submit(&add,&work[i]))printf("submitting task%d failed\n", i);
+        else printf("submitting task%d succeeded\n", i);
     }
 
-    sleep(3);
+    printf("Now submit tasks with no interval time");
 
-    for (int i=50; i<100; ++i){ //连续提交任务
+    for (int i=50; i<100; ++i){
         work[i].a = i;
         work[i].b = i;
-        if (pool_submit(&add,&work[i])){
-            printf("提交任务%d失败!'\n", i);
-        }else{
-             printf("提交任务%d成功!'\n", i);
-        }
+        if (pool_submit(&add,&work[i]))printf("submitting task%d failed\n", i);
+        else printf("submitting task%d succeeded\n", i);
     }
 
-    sleep(3);
-    pool_shutdown(); //关闭线程池
-
-
+    pool_shutdown();
     return 0;
 }

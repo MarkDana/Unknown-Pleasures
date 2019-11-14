@@ -55,6 +55,7 @@ int enqueue(task t)
 task dequeue() {
     task work;
     sem_wait(&semSize);  //acquire semaphore
+    //is semSize<=0 wait, block; else --
     pthread_mutex_lock(&lock);
     work = worktodo[head];
     head = (head + 1) % QUEUE_SIZE;
