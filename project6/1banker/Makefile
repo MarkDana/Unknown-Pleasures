@@ -1,11 +1,10 @@
 CC=g++
 CFLAGS=-Wall
 
-all: BankerAlgorithm.o
-	$(CC) $(CFLAGS) -o BankerAlgorithm  BankerAlgorithm.o
-buffer.o: BankerAlgorithm.cpp
-	$(CC) $(CFLAGS) -c BankerAlgorithm.cpp
-
+all: banker.o
+	$(CC) $(CFLAGS) -o banker  banker.o
+buffer.o: banker.c
+	$(CC) $(CFLAGS) -c banker.c
 clean:
 	rm -rf *.o
-	rm -rf BankerAlgorithm
+	rm -rf banker
