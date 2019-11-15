@@ -107,7 +107,7 @@ void printState(){
 
 int main(int argc, char *argv[]){
 	if (strcmp(argv[1],"-h")==0){
-		printf("command like ./banker 10 5 7 8");
+		printf("command like ./banker 10 5 7 8\n");
 		return 0;}
 	printf("%d resources initial num: ", NUMBER_OF_RESOURCES);
 	for (int i=0; i<NUMBER_OF_RESOURCES; ++i){
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]){
     int thiscustomer;
 
     while (1) {
-		printf("Please input command, e.g. RQ 0 3 1 2 1 / RL 4 1 2 3 1 / * :");
+		printf("Please input command, e.g. RQ 0 3 1 2 1 / RL 4 1 2 3 1 / * : ");
 		scanf("%s", command);
 		if(strcmp(command,"RQ")==0){
 			scanf("%d", &thiscustomer);
