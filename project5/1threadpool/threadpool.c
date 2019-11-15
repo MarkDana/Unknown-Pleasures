@@ -11,8 +11,6 @@
 #define QUEUE_SIZE 10
 #define NUMBER_OF_THREADS 3
 
-#define TRUE 1
-
 // this represents work that has to be 
 // completed by a thread in the pool
 typedef struct 
@@ -67,7 +65,7 @@ task dequeue() {
 // the worker thread in the thread pool
 void *worker(void *param){
     task work;
-    while (TRUE){
+    while (1){
         work = dequeue();
         execute(work.function, work.data);
     }

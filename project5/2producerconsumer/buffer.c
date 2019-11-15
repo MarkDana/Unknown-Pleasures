@@ -62,7 +62,7 @@ void *consumer(void *param){
     int consumer_id = *(int *)param;
     buffer_item item;
     while(1){
-        usleep(randomM(5*MAXCONSUMERWAIT));
+        usleep(randomM(MAXCONSUMERWAIT));
         remove_item(&item, consumer_id);
     }
     pthread_exit(0);
