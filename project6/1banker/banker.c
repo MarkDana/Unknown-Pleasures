@@ -97,7 +97,7 @@ void printState(){
 		for(int j = 0; j < NUMBER_OF_RESOURCES; ++j)printf("%d\t",allocation[i][j]);
 		printf("\n");
 	}
-	printf("\nNeed:\n");
+	printf("Need:\n");
 	for(int i = 0; i < NUMBER_OF_CUSTOMERS; ++i){
 		for(int j = 0; j < NUMBER_OF_RESOURCES; ++j)printf("%d\t",need[i][j]);
 		printf("\n");
@@ -105,7 +105,10 @@ void printState(){
 	printf("\n");
 }
 
-int main(int argc, char *argv[]){   
+int main(int argc, char *argv[]){
+	if (strcmp(argv[1],"-h")==0){
+		printf("command like ./banker 10 5 7 8");
+		return 0;}
 	printf("%d resources initial num: ", NUMBER_OF_RESOURCES);
 	for (int i=0; i<NUMBER_OF_RESOURCES; ++i){
 		available[i] = atoi(argv[i + 1]);
@@ -129,7 +132,7 @@ int main(int argc, char *argv[]){
         ++ind;
     }
     fclose(in);
-    printf("\nMax:\n");
+    printf("Max:\n");
 	for(int i = 0; i < NUMBER_OF_CUSTOMERS; ++i){
 		for(int j = 0; j < NUMBER_OF_RESOURCES; ++j)printf("%d\t",need[i][j]);
 		printf("\n");
@@ -140,7 +143,7 @@ int main(int argc, char *argv[]){
     int thiscustomer;
 
     while (1) {
-		printf("Please input command, e.g. RQ 0 3 1 2 1 / RL 4 1 2 3 1 / *");
+		printf("Please input command, e.g. RQ 0 3 1 2 1 / RL 4 1 2 3 1 / * :");
 		scanf("%s", command);
 		if(strcmp(command,"RQ")==0){
 			scanf("%d", &thiscustomer);
