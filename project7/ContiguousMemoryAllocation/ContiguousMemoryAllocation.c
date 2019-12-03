@@ -150,9 +150,9 @@ int main (int argc, char* argv[]){
 		}else if (strcmp(cmd, "RQ") == 0){
 			scanf ("%s", pname);
 			scanf ("%d", &needSpace);
-			scanf ("%s", &mode);
-			printf("%s%d%s\n",pname,needSpace,mode);
-			request(pname, needSpace, mode);
+			// scanf ("%s", &mode);
+			printf("%s%d\n",pname,needSpace);
+			request(pname, needSpace, 'W');
 		}else if (strcmp (cmd, "STAT") == 0)printStat();
 		else if (strcmp (cmd, "C") == 0)compact();
 
