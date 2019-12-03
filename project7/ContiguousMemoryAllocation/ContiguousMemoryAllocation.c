@@ -11,7 +11,9 @@ typedef struct pcb{
 	int base;
 	int limit;
 	struct pcb* next;
-}PCB *head, *tail;
+}PCB;
+
+PCB *head, *tail;
 //use link table to store the processes' fragments
 
 PCB* newPCB (char* pname, int base, int limit, PCB* next){
