@@ -142,7 +142,6 @@ int main (int argc, char* argv[]){
 	while (1) {
 		printf ("allocator> ");
 		scanf ("%s", cmd);
-		printf("%s\n",cmd);
 		if (strcmp(cmd, "Q") == 0) break;
 		else if (strcmp(cmd, "RL") == 0){
 			scanf ("%s", pname);
