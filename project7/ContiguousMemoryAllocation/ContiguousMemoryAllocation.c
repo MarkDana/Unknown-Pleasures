@@ -27,7 +27,7 @@ PCB* newPCB (char* pname, int base, int limit, PCB* next){
 
 PCB* firstFit (int needSpace){  //return the last process's point before the allowed space
 	PCB* p = head;
-	while (p -> next != tail) {
+	while (p != tail) {
 		if (p -> next -> base - (p -> base + p -> limit) < needSpace)p = p->next;
 		return p;
 	}
@@ -38,7 +38,7 @@ PCB* bestFit (int needSpace){
 	PCB* p = head;
 	PCB* best = NULL;
 	int minFitSpace = MAX;
-	while (p -> next != tail) {
+	while (p != tail) {
 		int nextSpace = (p -> next -> base - (p -> base + p -> limit));
 		if (nextSpace >= needSpace && nextSpace < minFitSpace) {
 			minFitSpace = nextSpace;
@@ -54,9 +54,10 @@ PCB* worstFit (int needSpace){
 	PCB* p = head;
 	PCB* worst = NULL;
 	int maxFitSpace = MIN;
-	while (p -> next != tail) {
-		printf("%d %d\n",p -> base , p -> limit);
+	while (p != tail) {
 		int nextSpace = (p -> next -> base - (p -> base + p -> limit));
+		printf("%d %d %d %d %d\n",p -> base , p -> limit, nextSpace, needSpace, maxFitSpace);
+
 		if (nextSpace >= needSpace && nextSpace > maxFitSpace) {
 			maxFitSpace = nextSpace;
 			worst = p;
@@ -138,9 +139,9 @@ int main (int argc, char* argv[]){
 		return 0;} 
 	memory_MAX = atoi(argv[1]);
 
-	head = newPCB ("HEAD", 0, 0, tail);
 	tail = newPCB ("TAIL", memory_MAX, 0, NULL);
-
+	head = newPCB ("HEAD", 0, 0, tail);
+	
 	while (1) {
 		printf ("allocator> ");
 		scanf ("%s", cmd);
