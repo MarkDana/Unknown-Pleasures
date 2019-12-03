@@ -70,7 +70,7 @@ void request (char* pname, int needSpace, char mode){
 		case 'F': lastp = firstFit (needSpace);  break;
 		case 'B': lastp = bestFit (needSpace);  break;
 		case 'W': lastp = worstFit (needSpace);  break;
-		default: printf ("ERROR: INVALID MODE\n"); return 0;
+		default: printf ("ERROR: INVALID MODE\n");
 	}
 	if (lastp == NULL) {
 		printf ("NO ANY ENOUGH SPACE\n");
@@ -136,8 +136,8 @@ int main (int argc, char* argv[]){
 		return 0;} 
 	memory_MAX = atoi(argv[1]);
 
-	head = newPCB (0, 0, "HEAD", tail);
-	tail = newPCB (memory_MAX, 0, "TAIL", NULL);
+	head = newPCB ("HEAD", 0, 0, tail);
+	tail = newPCB ("TAIL", memory_MAX, 0, NULL);
 
 	while (1) {
 		printf ("allocator> ");
@@ -149,7 +149,7 @@ int main (int argc, char* argv[]){
 		}else if (strcmp(cmd, "RQ") == 0){
 			scanf ("%s", pname);
 			scanf ("%d", &needSpace);
-			scanf ("%s", mode);
+			scanf ("%s", &mode);
 			request(pname, needSpace, mode);
 		}else if (strcmp (cmd, "STAT") == 0)printStat();
 		else if (strcmp (cmd, "C") == 0)compact();
