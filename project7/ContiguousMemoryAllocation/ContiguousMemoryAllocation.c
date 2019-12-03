@@ -29,7 +29,7 @@ PCB* firstFit (int needSpace){  //return the last process's point before the all
 	PCB* p = head;
 	while (p != tail) {
 		if (p -> next -> base - (p -> base + p -> limit) < needSpace)p = p->next;
-		return p;
+		else return p;
 	}
 	return NULL;
 }
