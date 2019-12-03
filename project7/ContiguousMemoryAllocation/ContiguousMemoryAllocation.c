@@ -50,6 +50,7 @@ PCB* bestFit (int needSpace){
 }
 
 PCB* worstFit (int needSpace){
+	printf("test %d worst\n",needSpace);
 	PCB* p = head;
 	PCB* worst = NULL;
 	int maxFitSpace = MIN;
