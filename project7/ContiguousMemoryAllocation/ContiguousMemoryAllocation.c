@@ -142,6 +142,7 @@ int main (int argc, char* argv[]){
 	while (1) {
 		printf ("allocator> ");
 		scanf ("%s", cmd);
+		prinf("%s\n",cmd);
 		if (strcmp(cmd, "X") == 0) break;
 		else if (strcmp(cmd, "RL") == 0){
 			scanf ("%s", pname);
@@ -150,6 +151,7 @@ int main (int argc, char* argv[]){
 			scanf ("%s", pname);
 			scanf ("%d", &needSpace);
 			scanf ("%s", &mode);
+			prinf("%s%d%s\n",pname,needSpace,mode);
 			request(pname, needSpace, mode);
 		}else if (strcmp (cmd, "STAT") == 0)printStat();
 		else if (strcmp (cmd, "C") == 0)compact();
