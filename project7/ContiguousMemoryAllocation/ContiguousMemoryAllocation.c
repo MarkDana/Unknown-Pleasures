@@ -55,6 +55,7 @@ PCB* worstFit (int needSpace){
 	PCB* worst = NULL;
 	int maxFitSpace = MIN;
 	while (p -> next != tail) {
+		printf("%d %d\n",p -> base , p -> limit);
 		int nextSpace = (p -> next -> base - (p -> base + p -> limit));
 		if (nextSpace >= needSpace && nextSpace > maxFitSpace) {
 			maxFitSpace = nextSpace;
