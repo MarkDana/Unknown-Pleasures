@@ -50,14 +50,11 @@ PCB* bestFit (int needSpace){
 }
 
 PCB* worstFit (int needSpace){
-	printf("test %d worst\n",needSpace);
 	PCB* p = head;
 	PCB* worst = NULL;
 	int maxFitSpace = MIN;
 	while (p != tail) {
 		int nextSpace = (p -> next -> base - (p -> base + p -> limit));
-		printf("%d %d %d %d %d\n",p -> base , p -> limit, nextSpace, needSpace, maxFitSpace);
-
 		if (nextSpace >= needSpace && nextSpace > maxFitSpace) {
 			maxFitSpace = nextSpace;
 			worst = p;
@@ -146,7 +143,7 @@ int main (int argc, char* argv[]){
 		printf ("allocator> ");
 		scanf ("%s", cmd);
 		printf("%s\n",cmd);
-		if (strcmp(cmd, "X") == 0) break;
+		if (strcmp(cmd, "Q") == 0) break;
 		else if (strcmp(cmd, "RL") == 0){
 			scanf ("%s", pname);
 			release(pname);
@@ -155,7 +152,6 @@ int main (int argc, char* argv[]){
 			scanf ("%d", &needSpace);
 			getchar();
 			mode = getchar();
-			printf("%s %d %c\n",pname,needSpace,mode);
 			request(pname, needSpace, mode);
 		}else if (strcmp (cmd, "STAT") == 0)printStat();
 		else if (strcmp (cmd, "C") == 0)compact();
