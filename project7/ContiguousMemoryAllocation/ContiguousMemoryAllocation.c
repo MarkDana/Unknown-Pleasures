@@ -87,7 +87,7 @@ void release (char* pname) {
 			PCB* tmp = p -> next;
 			p -> next = tmp -> next;
 			free(tmp);
-			printf("SUCCESS: RELEASE %s\n", pname);
+			printf("SUCCESS: RELEASE %s\n", pname);return;
 		}else p = p -> next;
 	}
 	printf("ERROR: NO PROCESS %s\n", pname);
