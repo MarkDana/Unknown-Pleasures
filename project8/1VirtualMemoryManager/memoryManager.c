@@ -3,8 +3,8 @@
 #include<string.h>
 #define TLB_SIZE 16
 #define PAGES 256
-#define FRAMES 128   //smaller than pages so page relacement may occur
-// #define FRAMES 256
+// #define FRAMES 128   //smaller than pages so page relacement may occur
+#define FRAMES 256
 #define PAGE_SIZE 256 // aka frame size
 #define OFFSET_BITS 8
 #define OFFSET_MASK 255
