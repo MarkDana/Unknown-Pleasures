@@ -16,8 +16,8 @@ typedef struct tlb_entry{
 
 TLB_Entry TLB[TLB_SIZE];
 int page_table[PAGES]; //need to init to all -1
-
-int which_page[FRAMES]; // from frame id in memory to page id in page table
+int frame2page[FRAMES]; // from frame id in memory to page id in page table
+//above 2 is reverse
 int8_t memory[MEMORY_SIZE]; // use int8_t as 8 bytes 
 
 int TLB_index=0; 
@@ -49,7 +49,7 @@ int main(int argc, char** argv){
     int faults = 0;
 
     for(int i = 0; i < PAGES; ++i)page_table[i] = -1;
-    for(int i = 0; i < FRAMES; ++i)which_page[i] = -1;
+    for(int i = 0; i < FRAMES; ++i)frame2page[i] = -1;
     for(int i = 0; i < TLB_SIZE; ++i)TLB[i].logical_page =-1;
 
     BACKING_STORE = fopen("BACKING_STORE.bin","r");
@@ -66,8 +66,8 @@ int main(int argc, char** argv){
             physical_page = page_table[logical_page];
             if (physical_page == -1){ //page fault
                 ++faults;
-                if(which_page[memory_index] != -1){ //need replacement (cover)
-                    int replacement_page = which_page[memory_index];
+                if(frame2page[memory_index] != -1){ //need replacement (full, cover)
+                    int replacement_page = frame2page[memory_index];
                     for(int i = 0;i < TLB_SIZE; ++i)if(TLB[i].logical_page == replacement_page)TLB[i].logical_page = -1;
                     page_table[replacement_page] = -1;
                 }
@@ -77,7 +77,7 @@ int main(int argc, char** argv){
                 fseek(BACKING_STORE, logical_page * PAGE_SIZE, SEEK_SET); 
                 // redirect BACKING_STORE, offset logical_page*PAGE_SIZE bytes
                 fread(memory + physical_page * PAGE_SIZE, 1, PAGE_SIZE, BACKING_STORE);
-                which_page[physical_page] = logical_page; // the original memory_index
+                frame2page[physical_page] = logical_page; // the original memory_index
                 page_table[logical_page] = physical_page;
             }
             TLB_insert(logical_page, physical_page);
@@ -88,7 +88,7 @@ int main(int argc, char** argv){
 		printf("Virtual address: %d Physical address: %d Value: %d\n" ,logical_address ,physical_address ,value);
         
     }
-    printf("Total: %d\tPage Faults:%d\tPage Fault Rate:%.3f\tTLB Hits:%d\tTLB Hit Rate:%.3f\n",
+    printf("\nTotal: %d\tPage Faults:%d\tPage Fault Rate:%.3f\tTLB Hits:%d\tTLB Hit Rate:%.3f\n",
     total, faults, faults / (1.0 * total), hits, hits / (1.0 * total));
     
     fclose(address_list);
