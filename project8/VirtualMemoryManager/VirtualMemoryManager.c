@@ -65,7 +65,7 @@ int main(int argc, char** argv){
         else{
             physical_page = page_table[logical_page];
             if (physical_page == -1){ //page fault
-                ++fault;
+                ++faults;
                 if(which_page[memory_index] != -1){ //need replacement (cover)
                     int replacement_page = which_page[memory_index];
                     for(int i = 0;i < TLB_SIZE; ++i)if(TLB[i].logical_page == replacement_page)TLB[i].logical_page = -1;
@@ -88,8 +88,8 @@ int main(int argc, char** argv){
 		printf("Virtual address: %d Physical address: %d Value: %d\n" ,logical_address ,physical_address ,value);
         
     }
-    printf(	"total: %d\tpage-fault:%d\tpage-fault rate:%.3f\tTLB hits:%d\tTLB hit rate:%.3f\n",
-    total, page_faults, page_faults / (1.0 * total), TLB_hits, TLB_hits / (1.0 * total));
+    printf("Total: %d\tPage Faults:%d\tPage Fault Rate:%.3f\tTLB Hits:%d\tTLB Hit Rate:%.3f\n",
+    total, faults, faults / (1.0 * total), hits, hits / (1.0 * total));
     
     fclose(address_list);
     fclose(BACKING_STORE);
